@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout title="About - Gatineau Church" lang="en">
+  <Header lang="en" />
+  
+  <main>
+    <section class="hero-small">
+      <div class="container">
+        <h1>About Our Church</h1>
+        <p>Discover our history, values, and vision for the Gatineau community</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="align-items: center; gap: 64px;">
+          <div>
+            <h2>Our History</h2>
+            <p>Gatineau Church was founded in 1973 by a group of devoted families who wanted to create a welcoming place of worship in the region. Since then, we have grown to become a dynamic faith community serving hundreds of families in the Gatineau area.</p>
+            <p>Over the decades, we have expanded our ministries to include programs for all ages, community services, and active engagement in helping the most vulnerable in our community.</p>
+          </div>
+          <div>
+            <img src="https://images.pexels.com/photos/372748/pexels-photo-372748.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Historic church" style="width: 100%; border-radius: 16px;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Our Values</h2>
+          <p>The principles that guide our faith community</p>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Love</h3>
+            <p>We believe that God's love is the foundation of everything we do. We strive to love unconditionally and serve with compassion.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Community</h3>
+            <p>We value fellowship and create an environment where everyone can belong and contribute to God's family.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Service</h3>
+            <p>We are called to serve our local community and beyond, meeting the physical and spiritual needs of those around us.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Our Pastoral Team</h2>
+          <p>Dedicated leaders serving our community</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card text-center">
+            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop" alt="Senior Pastor" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin: 0 auto 24px;">
+            <h3>Pastor Jean Dubois</h3>
+            <p><strong>Senior Pastor</strong></p>
+            <p>With over 20 years of ministry experience, Pastor Dubois guides our community with wisdom and compassion. He is married to Marie and father of three children.</p>
+          </div>
+          
+          <div class="card text-center">
+            <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop" alt="Associate Pastor" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin: 0 auto 24px;">
+            <h3>Pastor Marie Tremblay</h3>
+            <p><strong>Associate Pastor</strong></p>
+            <p>Specializing in family ministries and pastoral care, Pastor Tremblay brings a warm and caring approach to our team.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Our Vision</h2>
+          <p>Building a future of hope and transformation</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Local Vision</h3>
+            <p>To be a church that transforms the Gatineau community through Christ's love, offering hope and support to all who need it.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Global Vision</h3>
+            <p>To participate in the global mission of the Church by supporting missionary projects and contributing to evangelization and community development.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container text-center">
+        <h2>Join Our Family</h2>
+        <p>Whether you're new to faith or looking for a new church, we invite you to discover what God is doing in our community.</p>
+        <div style="margin-top: 32px;">
+          <a href="/en/contact" class="btn btn-primary">Contact Us</a>
+          <a href="/en/services" class="btn btn-outline">Our Services</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang="en" />
+</Layout>
+
+<style>
+  main {
+    padding-top: 80px;
+  }
+
+  .hero-small {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    color: white;
+    padding: 120px 0 80px;
+    text-align: center;
+  }
+
+  .hero-small h1 {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 24px;
+  }
+
+  .hero-small p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    .hero-small {
+      padding: 100px 0 60px;
+    }
+
+    .hero-small h1 {
+      font-size: 2.5rem;
+    }
+  }
+</style>

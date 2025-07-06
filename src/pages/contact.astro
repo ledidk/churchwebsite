@@ -1,0 +1,280 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Contact - Église de Gatineau" lang="fr">
+  <Header lang="fr" />
+  
+  <main>
+    <section class="hero-small">
+      <div class="container">
+        <h1>Nous Contacter</h1>
+        <p>Nous serions ravis de vous entendre et de vous accueillir dans notre communauté</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="gap: 64px;">
+          <div>
+            <h2>Informations de Contact</h2>
+            
+            <div class="contact-info">
+              <div class="contact-item">
+                <h3>Adresse</h3>
+                <p>123 Rue Principale<br>Gatineau, QC J8X 1A1<br>Canada</p>
+              </div>
+              
+              <div class="contact-item">
+                <h3>Téléphone</h3>
+                <p>(819) 555-0123</p>
+              </div>
+              
+              <div class="contact-item">
+                <h3>Courriel</h3>
+                <p>info@eglisegatineau.ca</p>
+              </div>
+              
+              <div class="contact-item">
+                <h3>Horaires de Bureau</h3>
+                <p><strong>Lundi - Vendredi:</strong> 9h00 - 17h00<br>
+                <strong>Samedi:</strong> 9h00 - 12h00<br>
+                <strong>Dimanche:</strong> Fermé (Services toute la journée)</p>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="card">
+              <h3>Envoyez-nous un Message</h3>
+              <form id="contact-form">
+                <div class="form-group">
+                  <label for="name">Nom complet</label>
+                  <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="email">Adresse courriel</label>
+                  <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="phone">Téléphone (optionnel)</label>
+                  <input type="tel" id="phone" name="phone">
+                </div>
+                
+                <div class="form-group">
+                  <label for="subject">Sujet</label>
+                  <select id="subject" name="subject" required>
+                    <option value="">Choisissez un sujet</option>
+                    <option value="general">Question générale</option>
+                    <option value="prayer">Demande de prière</option>
+                    <option value="counseling">Conseil pastoral</option>
+                    <option value="volunteer">Bénévolat</option>
+                    <option value="event">Événement ou activité</option>
+                    <option value="other">Autre</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer le Message</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Horaires des Services</h2>
+          <p>Rejoignez-nous pour le culte et la communion fraternelle</p>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="card text-center">
+            <h3>Dimanche Matin</h3>
+            <p><strong>9h00 & 11h00</strong></p>
+            <p>Service de culte traditionnel avec musique, prédication et communion</p>
+          </div>
+          
+          <div class="card text-center">
+            <h3>Dimanche Soir</h3>
+            <p><strong>18h00</strong></p>
+            <p>Service plus intime avec prière, témoignages et étude biblique</p>
+          </div>
+          
+          <div class="card text-center">
+            <h3>Mercredi</h3>
+            <p><strong>19h00</strong></p>
+            <p>Réunion de prière et étude biblique communautaire</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Comment Nous Trouver</h2>
+          <p>Nous sommes situés au cœur de Gatineau, facilement accessible par transport en commun</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>En Transport en Commun</h3>
+            <p>Prenez la ligne 8 ou 25 de la STO et descendez à l'arrêt "Rue Principale". L'église se trouve à 2 minutes à pied.</p>
+            <p><strong>Arrêts les plus proches:</strong></p>
+            <ul style="margin-left: 24px;">
+              <li>Rue Principale (2 minutes)</li>
+              <li>Boulevard Maloney (5 minutes)</li>
+              <li>Rue Saint-Louis (7 minutes)</li>
+            </ul>
+          </div>
+          
+          <div class="card">
+            <h3>En Voiture</h3>
+            <p>Stationnement gratuit disponible sur place avec plus de 100 places.</p>
+            <p><strong>Directions:</strong></p>
+            <ul style="margin-left: 24px;">
+              <li>Autoroute 5: Sortie Boulevard Maloney</li>
+              <li>Autoroute 50: Sortie Rue Saint-Louis</li>
+              <li>Pont Champlain: Suivre Boulevard Fournier</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container text-center">
+        <h2>Première Visite?</h2>
+        <p>Nous serions ravis de vous accueillir! Voici ce que vous pouvez attendre lors de votre première visite:</p>
+        
+        <div class="grid grid-2" style="margin-top: 48px;">
+          <div class="card">
+            <h3>À Votre Arrivée</h3>
+            <p>Nos équipes d'accueil seront là pour vous saluer et vous aider à vous sentir à l'aise. N'hésitez pas à vous présenter - nous aimons rencontrer de nouvelles personnes!</p>
+          </div>
+          
+          <div class="card">
+            <h3>Pendant le Service</h3>
+            <p>Nos services durent environ 90 minutes et incluent de la musique, des prières et une prédication. Participez autant que vous le souhaitez - il n'y a aucune pression.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang="fr" />
+</Layout>
+
+<style>
+  main {
+    padding-top: 80px;
+  }
+
+  .hero-small {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    color: white;
+    padding: 120px 0 80px;
+    text-align: center;
+  }
+
+  .hero-small h1 {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 24px;
+  }
+
+  .hero-small p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .contact-item h3 {
+    color: var(--primary-blue);
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+  }
+
+  .contact-item p {
+    margin-bottom: 0;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--neutral-700);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--neutral-200);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+    font-family: inherit;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+  }
+
+  ul {
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .hero-small {
+      padding: 100px 0 60px;
+    }
+
+    .hero-small h1 {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Here you would typically send the form data to your server
+    // For demonstration, we'll show a success message
+    alert('Merci pour votre message! Nous vous répondrons dans les plus brefs délais.');
+    
+    // Reset form
+    this.reset();
+  });
+</script>

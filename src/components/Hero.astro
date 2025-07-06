@@ -1,0 +1,238 @@
+---
+const { lang = 'fr' } = Astro.props;
+
+const translations = {
+  fr: {
+    welcome: 'Bienvenue à l\'Église de Gatineau',
+    subtitle: 'Une communauté de foi, d\'espoir et d\'amour au cœur de Gatineau',
+    description: 'Rejoignez-nous pour le culte, la communion et la croissance spirituelle. Tous sont les bienvenus dans notre famille de foi.',
+    joinUs: 'Nous Rejoindre',
+    learnMore: 'En Savoir Plus',
+    nextService: 'Prochain Service',
+    sunday: 'Dimanche',
+    time: '11h00'
+  },
+  en: {
+    welcome: 'Welcome to Gatineau Church',
+    subtitle: 'A community of faith, hope, and love in the heart of Gatineau',
+    description: 'Join us for worship, fellowship, and spiritual growth. All are welcome in our family of faith.',
+    joinUs: 'Join Us',
+    learnMore: 'Learn More',
+    nextService: 'Next Service',
+    sunday: 'Sunday',
+    time: '11:00 AM'
+  }
+};
+
+const t = translations[lang];
+---
+
+<section class="hero">
+  <div class="hero-background">
+    <img src="https://images.pexels.com/photos/2291599/pexels-photo-2291599.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" alt="Church interior" />
+    <div class="hero-overlay"></div>
+  </div>
+  
+  <div class="hero-content">
+    <div class="container">
+      <div class="hero-text">
+        <h1>{t.welcome}</h1>
+        <p class="hero-subtitle">{t.subtitle}</p>
+        <p class="hero-description">{t.description}</p>
+        
+        <div class="hero-actions">
+          <a href={lang === 'fr' ? '/services' : '/en/services'} class="btn btn-primary">{t.joinUs}</a>
+          <a href={lang === 'fr' ? '/about' : '/en/about'} class="btn btn-outline">{t.learnMore}</a>
+        </div>
+      </div>
+      
+      <div class="hero-card">
+        <div class="service-card">
+          <h3>{t.nextService}</h3>
+          <div class="service-info">
+            <span class="service-day">{t.sunday}</span>
+            <span class="service-time">{t.time}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+
+  .hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.8) 0%, rgba(30, 64, 175, 0.6) 100%);
+    z-index: -1;
+  }
+
+  .hero-content {
+    width: 100%;
+    z-index: 1;
+  }
+
+  .hero-content .container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-text {
+    color: white;
+    max-width: 600px;
+  }
+
+  .hero-text h1 {
+    color: white;
+    font-size: 3.5rem;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 300;
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .hero-actions .btn-outline {
+    border-color: white;
+    color: white;
+  }
+
+  .hero-actions .btn-outline:hover {
+    background: white;
+    color: var(--primary-blue);
+  }
+
+  .hero-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  }
+
+  .service-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 14px;
+    padding: 32px;
+    text-align: center;
+    min-width: 250px;
+  }
+
+  .service-card h3 {
+    color: var(--primary-blue);
+    margin-bottom: 16px;
+    font-size: 1.25rem;
+  }
+
+  .service-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .service-day {
+    font-weight: 600;
+    color: var(--neutral-800);
+    font-size: 1.125rem;
+  }
+
+  .service-time {
+    color: var(--accent-gold);
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 500px;
+    }
+
+    .hero-content .container {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      text-align: center;
+    }
+
+    .hero-text h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+    }
+
+    .hero-actions {
+      justify-content: center;
+    }
+
+    .service-card {
+      min-width: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-text h1 {
+      font-size: 2rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-actions .btn {
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+</style>

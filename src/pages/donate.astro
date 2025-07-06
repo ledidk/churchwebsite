@@ -1,0 +1,267 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Faire un Don - Église de Gatineau" lang="fr">
+  <Header lang="fr" />
+  
+  <main>
+    <section class="hero-small">
+      <div class="container">
+        <h1>Faire un Don</h1>
+        <p>Votre générosité nous aide à continuer notre mission dans la communauté de Gatineau</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="align-items: center; gap: 64px;">
+          <div>
+            <h2>Pourquoi Donner?</h2>
+            <p>Vos dons nous permettent de maintenir nos services, d'améliorer nos installations et d'étendre notre portée dans la communauté. Chaque contribution, grande ou petite, fait une différence significative dans la vie de ceux que nous servons.</p>
+            <p>Nous utilisons vos dons pour:</p>
+            <ul style="margin-left: 24px; margin-bottom: 24px;">
+              <li>Maintenir et améliorer nos installations</li>
+              <li>Soutenir nos programmes communautaires</li>
+              <li>Aider les familles dans le besoin</li>
+              <li>Financer nos ministères et activités</li>
+              <li>Soutenir les missions locales et internationales</li>
+            </ul>
+          </div>
+          <div>
+            <img src="https://images.pexels.com/photos/6994835/pexels-photo-6994835.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Générosité" style="width: 100%; border-radius: 16px;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Façons de Donner</h2>
+          <p>Choisissez la méthode qui vous convient le mieux</p>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Don Unique</h3>
+            <p>Faites un don ponctuel en ligne de manière sécurisée. Vous pouvez choisir le montant et la destination de votre don.</p>
+            <button class="btn btn-primary" onclick="showDonationForm('one-time')">Donner Maintenant</button>
+          </div>
+          
+          <div class="card">
+            <h3>Don Mensuel</h3>
+            <p>Soutenez notre mission de manière régulière avec un don mensuel automatique. Vous pouvez modifier ou annuler à tout moment.</p>
+            <button class="btn btn-primary" onclick="showDonationForm('monthly')">Don Mensuel</button>
+          </div>
+          
+          <div class="card">
+            <h3>Don par Chèque</h3>
+            <p>Vous pouvez également faire un don par chèque en personne le dimanche ou par courrier à notre adresse.</p>
+            <a href="/contact" class="btn btn-outline">Coordonnées</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="donation-form" id="donation-form" style="display: none;">
+          <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <h3>Formulaire de Don</h3>
+            <form id="donate-form">
+              <div class="form-group">
+                <label for="amount">Montant ($)</label>
+                <input type="number" id="amount" name="amount" min="1" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="frequency">Fréquence</label>
+                <select id="frequency" name="frequency" required>
+                  <option value="one-time">Don unique</option>
+                  <option value="monthly">Don mensuel</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="designation">Destination du don</label>
+                <select id="designation" name="designation" required>
+                  <option value="general">Fonds général</option>
+                  <option value="building">Fonds de construction</option>
+                  <option value="missions">Missions</option>
+                  <option value="youth">Ministère jeunesse</option>
+                  <option value="community">Aide communautaire</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="donor-name">Nom complet</label>
+                <input type="text" id="donor-name" name="donor-name" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="donor-email">Adresse courriel</label>
+                <input type="email" id="donor-email" name="donor-email" required>
+              </div>
+              
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" id="anonymous" name="anonymous">
+                  Don anonyme
+                </label>
+              </div>
+              
+              <button type="submit" class="btn btn-primary" style="width: 100%;">Procéder au Paiement</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Impact de vos Dons</h2>
+          <p>Voici comment vos contributions transforment des vies</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Cette Année</h3>
+            <ul style="margin-left: 24px;">
+              <li>500+ familles aidées par notre banque alimentaire</li>
+              <li>150+ enfants dans nos programmes jeunesse</li>
+              <li>50+ personnes baptisées</li>
+              <li>25+ projets communautaires soutenus</li>
+            </ul>
+          </div>
+          
+          <div class="card">
+            <h3>Projets Futurs</h3>
+            <ul style="margin-left: 24px;">
+              <li>Rénovation du centre communautaire</li>
+              <li>Nouveau programme pour les aînés</li>
+              <li>Expansion des services aux immigrants</li>
+              <li>Soutien accru aux missions internationales</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container text-center">
+        <h2>Questions sur les Dons?</h2>
+        <p>Notre équipe est là pour vous aider avec toutes vos questions sur les dons et la philanthropie.</p>
+        <div style="margin-top: 32px;">
+          <a href="/contact" class="btn btn-primary">Nous Contacter</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang="fr" />
+</Layout>
+
+<style>
+  main {
+    padding-top: 80px;
+  }
+
+  .hero-small {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    color: white;
+    padding: 120px 0 80px;
+    text-align: center;
+  }
+
+  .hero-small h1 {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 24px;
+  }
+
+  .hero-small p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--neutral-700);
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--neutral-200);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+  }
+
+  .form-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  ul {
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .hero-small {
+      padding: 100px 0 60px;
+    }
+
+    .hero-small h1 {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<script>
+  function showDonationForm(type) {
+    const form = document.getElementById('donation-form');
+    const frequencySelect = document.getElementById('frequency');
+    
+    if (type === 'monthly') {
+      frequencySelect.value = 'monthly';
+    } else {
+      frequencySelect.value = 'one-time';
+    }
+    
+    form.style.display = 'block';
+    form.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  document.getElementById('donate-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Here you would integrate with your payment processor
+    // For demonstration, we'll show an alert
+    alert('Pour continuer avec le paiement, veuillez configurer votre processeur de paiement Stripe. Contactez-nous pour plus d\'informations.');
+  });
+</script>

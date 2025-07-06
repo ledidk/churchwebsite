@@ -1,0 +1,135 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Admin Login - Église de Gatineau" lang="fr">
+  <main class="login-page">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <h1>Administration</h1>
+          <p>Église de Gatineau</p>
+        </div>
+        
+        <form id="login-form" class="login-form">
+          <div class="form-group">
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          
+          <button type="submit" class="btn btn-primary login-btn">Se connecter</button>
+        </form>
+        
+        <div class="login-footer">
+          <p>Accès réservé aux administrateurs autorisés</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .login-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .login-card {
+    background: white;
+    border-radius: 16px;
+    padding: 48px 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  }
+
+  .login-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .login-header h1 {
+    color: var(--primary-blue);
+    margin-bottom: 8px;
+  }
+
+  .login-header p {
+    color: var(--neutral-600);
+    margin: 0;
+  }
+
+  .login-form {
+    margin-bottom: 24px;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--neutral-700);
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--neutral-200);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+  }
+
+  .login-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .login-footer {
+    text-align: center;
+  }
+
+  .login-footer p {
+    font-size: 0.875rem;
+    color: var(--neutral-500);
+    margin: 0;
+  }
+</style>
+
+<script>
+  document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    // Simple authentication (in production, this would be server-side)
+    if (username === 'admin' && password === 'church2024') {
+      localStorage.setItem('churchAdmin', 'authenticated');
+      window.location.href = '/admin/dashboard';
+    } else {
+      alert('Nom d\'utilisateur ou mot de passe incorrect');
+    }
+  });
+</script>

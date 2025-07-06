@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Église de Gatineau - Bienvenue" lang="fr">
+  <Header lang="fr" />
+  
+  <main>
+    <Hero lang="fr" />
+    
+    <!-- About Section -->
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="align-items: center;">
+          <div>
+            <h2>Notre Mission</h2>
+            <p>L'Église de Gatineau est une communauté de foi dynamique dédiée à l'amour de Dieu et au service de notre communauté. Nous croyons en la puissance transformatrice de l'Évangile et nous efforçons de créer un environnement accueillant où chacun peut grandir dans sa foi.</p>
+            <p>Depuis plus de 50 ans, nous servons la communauté de Gatineau avec passion et dévouement, offrant des services spirituels, des programmes communautaires et un soutien aux familles dans le besoin.</p>
+            <a href="/about" class="btn btn-primary">En Savoir Plus</a>
+          </div>
+          <div>
+            <img src="https://images.pexels.com/photos/8468570/pexels-photo-8468570.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Communauté de l'église" style="width: 100%; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Nos Services</h2>
+          <p>Rejoignez-nous pour le culte, la prière et la communion fraternelle</p>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Service Dominical</h3>
+            <p><strong>Dimanche 9h00 & 11h00</strong></p>
+            <p>Culte traditionnel avec musique, prédication et communion. Un moment de louange et de célébration pour toute la famille.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Service du Soir</h3>
+            <p><strong>Dimanche 18h00</strong></p>
+            <p>Service plus intime avec temps de prière, témoignages et étude biblique approfondie.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Réunion de Prière</h3>
+            <p><strong>Mercredi 19h00</strong></p>
+            <p>Temps de prière communautaire pour les besoins de l'église et de la communauté.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ministries Section -->
+    <section class="section">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Nos Ministères</h2>
+          <p>Des programmes pour tous les âges et tous les besoins</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Ministère Jeunesse</h3>
+            <p>Activités, camps et programmes spéciaux pour les jeunes de 12 à 18 ans. Nous encourageons la croissance spirituelle dans un environnement amusant et sûr.</p>
+          </div>
+          
+          <div class="card">
+            <h3>École du Dimanche</h3>
+            <p>Programmes éducatifs pour les enfants de tous âges, avec des enseignements adaptés à leur niveau de compréhension.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Ministère Familial</h3>
+            <p>Support et counseling pour les familles, avec des programmes de mariage, de parentalité et de gestion des conflits.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Aide Communautaire</h3>
+            <p>Programmes d'aide alimentaire, de support aux personnes âgées et d'assistance aux familles dans le besoin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Nous Contacter</h2>
+          <p>Nous serions ravis de vous accueillir dans notre communauté</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Informations de Contact</h3>
+            <p><strong>Adresse:</strong><br>123 Rue Principale<br>Gatineau, QC J8X 1A1</p>
+            <p><strong>Téléphone:</strong><br>(819) 555-0123</p>
+            <p><strong>Courriel:</strong><br>info@eglisegatineau.ca</p>
+          </div>
+          
+          <div class="card">
+            <h3>Horaires de Bureau</h3>
+            <p><strong>Lundi - Vendredi:</strong><br>9h00 - 17h00</p>
+            <p><strong>Samedi:</strong><br>9h00 - 12h00</p>
+            <p><strong>Dimanche:</strong><br>Fermé (Services toute la journée)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang="fr" />
+</Layout>
+
+<style>
+  main {
+    padding-top: 80px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>

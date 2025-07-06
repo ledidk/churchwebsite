@@ -1,0 +1,191 @@
+---
+const { lang = 'fr' } = Astro.props;
+
+const translations = {
+  fr: {
+    home: 'Accueil',
+    about: 'À Propos',
+    services: 'Services',
+    events: 'Événements',
+    ministries: 'Ministères',
+    contact: 'Contact',
+    donate: 'Faire un Don',
+    churchName: 'Église de Gatineau'
+  },
+  en: {
+    home: 'Home',
+    about: 'About',
+    services: 'Services',
+    events: 'Events',
+    ministries: 'Ministries',
+    contact: 'Contact',
+    donate: 'Donate',
+    churchName: 'Gatineau Church'
+  }
+};
+
+const t = translations[lang];
+---
+
+<header class="header">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-brand">
+        <a href={lang === 'fr' ? '/' : '/en'}>
+          <h2>{t.churchName}</h2>
+        </a>
+      </div>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href={lang === 'fr' ? '/' : '/en'}>{t.home}</a></li>
+        <li><a href={lang === 'fr' ? '/about' : '/en/about'}>{t.about}</a></li>
+        <li><a href={lang === 'fr' ? '/services' : '/en/services'}>{t.services}</a></li>
+        <li><a href={lang === 'fr' ? '/events' : '/en/events'}>{t.events}</a></li>
+        <li><a href={lang === 'fr' ? '/ministries' : '/en/ministries'}>{t.ministries}</a></li>
+        <li><a href={lang === 'fr' ? '/contact' : '/en/contact'}>{t.contact}</a></li>
+        <li><a href={lang === 'fr' ? '/donate' : '/en/donate'} class="btn btn-secondary">{t.donate}</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="language-switch">
+          <a href={lang === 'fr' ? '/en' : '/'} class="lang-btn">
+            {lang === 'fr' ? 'EN' : 'FR'}
+          </a>
+        </div>
+        <button class="nav-toggle" id="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--neutral-200);
+    transition: all 0.3s ease;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+  }
+
+  .nav-brand h2 {
+    color: var(--primary-blue);
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .nav-menu a {
+    font-weight: 500;
+    color: var(--neutral-700);
+    transition: color 0.2s ease;
+  }
+
+  .nav-menu a:hover {
+    color: var(--primary-blue);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .lang-btn {
+    padding: 8px 16px;
+    background: var(--neutral-100);
+    border-radius: 6px;
+    font-weight: 500;
+    color: var(--neutral-700);
+    transition: all 0.2s ease;
+  }
+
+  .lang-btn:hover {
+    background: var(--primary-blue);
+    color: white;
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .nav-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--neutral-700);
+    margin: 3px 0;
+    transition: 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .nav-menu {
+      position: fixed;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      flex-direction: column;
+      padding: 32px 0;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .nav-menu.active {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-toggle {
+      display: flex;
+    }
+
+    .nav-brand h2 {
+      font-size: 1.25rem;
+    }
+  }
+</style>
+
+<script>
+  const navToggle = document.getElementById('nav-toggle');
+  const navMenu = document.getElementById('nav-menu');
+
+  navToggle?.addEventListener('click', () => {
+    navMenu?.classList.toggle('active');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!navToggle?.contains(e.target) && !navMenu?.contains(e.target)) {
+      navMenu?.classList.remove('active');
+    }
+  });
+</script>

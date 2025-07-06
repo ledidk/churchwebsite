@@ -1,0 +1,1076 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Admin Dashboard - Église de Gatineau" lang="fr">
+  <div id="admin-app">
+    <!-- Admin Header -->
+    <header class="admin-header">
+      <div class="admin-header-content">
+        <div class="admin-logo">
+          <h2>Admin CMS</h2>
+          <span>Église de Gatineau</span>
+        </div>
+        
+        <div class="admin-actions">
+          <button class="btn btn-outline" onclick="previewSite()">Aperçu du Site</button>
+          <button class="btn btn-secondary" onclick="logout()">Déconnexion</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar">
+      <nav class="admin-nav">
+        <div class="nav-section">
+          <h3>Pages</h3>
+          <ul>
+            <li><a href="#" onclick="loadPageEditor('home')" class="nav-link active">Accueil</a></li>
+            <li><a href="#" onclick="loadPageEditor('about')" class="nav-link">À Propos</a></li>
+            <li><a href="#" onclick="loadPageEditor('services')" class="nav-link">Services</a></li>
+            <li><a href="#" onclick="loadPageEditor('events')" class="nav-link">Événements</a></li>
+            <li><a href="#" onclick="loadPageEditor('ministries')" class="nav-link">Ministères</a></li>
+            <li><a href="#" onclick="loadPageEditor('contact')" class="nav-link">Contact</a></li>
+            <li><a href="#" onclick="loadPageEditor('donate')" class="nav-link">Dons</a></li>
+          </ul>
+        </div>
+        
+        <div class="nav-section">
+          <h3>Composants</h3>
+          <ul>
+            <li><a href="#" onclick="loadComponentEditor('header')" class="nav-link">En-tête</a></li>
+            <li><a href="#" onclick="loadComponentEditor('footer')" class="nav-link">Pied de page</a></li>
+            <li><a href="#" onclick="loadComponentEditor('hero')" class="nav-link">Section Hero</a></li>
+          </ul>
+        </div>
+        
+        <div class="nav-section">
+          <h3>Paramètres</h3>
+          <ul>
+            <li><a href="#" onclick="loadSettings('general')" class="nav-link">Général</a></li>
+            <li><a href="#" onclick="loadSettings('seo')" class="nav-link">SEO</a></li>
+            <li><a href="#" onclick="loadSettings('social')" class="nav-link">Réseaux Sociaux</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+      <div class="admin-toolbar">
+        <div class="toolbar-left">
+          <h1 id="page-title">Éditeur de Page - Accueil</h1>
+        </div>
+        
+        <div class="toolbar-right">
+          <button class="btn btn-outline" onclick="addSection()">+ Ajouter Section</button>
+          <button class="btn btn-primary" onclick="savePage()">Sauvegarder</button>
+          <button class="btn btn-secondary" onclick="publishPage()">Publier</button>
+        </div>
+      </div>
+
+      <!-- Page Editor -->
+      <div class="page-editor">
+        <div class="editor-canvas" id="editor-canvas">
+          <!-- Dynamic content will be loaded here -->
+        </div>
+        
+        <!-- Properties Panel -->
+        <div class="properties-panel" id="properties-panel">
+          <h3>Propriétés</h3>
+          <div class="properties-content">
+            <p>Sélectionnez un élément pour modifier ses propriétés</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Section Library Modal -->
+    <div class="modal" id="section-library">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Bibliothèque de Sections</h3>
+          <button class="modal-close" onclick="closeSectionLibrary()">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="section-grid">
+            <div class="section-template" onclick="addSectionTemplate('hero')">
+              <div class="section-preview">
+                <div class="preview-hero"></div>
+              </div>
+              <h4>Section Hero</h4>
+              <p>Bannière principale avec titre et boutons</p>
+            </div>
+            
+            <div class="section-template" onclick="addSectionTemplate('text-image')">
+              <div class="section-preview">
+                <div class="preview-text-image"></div>
+              </div>
+              <h4>Texte + Image</h4>
+              <p>Section avec texte et image côte à côte</p>
+            </div>
+            
+            <div class="section-template" onclick="addSectionTemplate('cards')">
+              <div class="section-preview">
+                <div class="preview-cards"></div>
+              </div>
+              <h4>Grille de Cartes</h4>
+              <p>Cartes en grille pour services ou ministères</p>
+            </div>
+            
+            <div class="section-template" onclick="addSectionTemplate('testimonials')">
+              <div class="section-preview">
+                <div class="preview-testimonials"></div>
+              </div>
+              <h4>Témoignages</h4>
+              <p>Section pour témoignages de membres</p>
+            </div>
+            
+            <div class="section-template" onclick="addSectionTemplate('contact-form')">
+              <div class="section-preview">
+                <div class="preview-form"></div>
+              </div>
+              <h4>Formulaire Contact</h4>
+              <p>Formulaire de contact personnalisable</p>
+            </div>
+            
+            <div class="section-template" onclick="addSectionTemplate('gallery')">
+              <div class="section-preview">
+                <div class="preview-gallery"></div>
+              </div>
+              <h4>Galerie Photos</h4>
+              <p>Galerie d'images responsive</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  #admin-app {
+    display: grid;
+    grid-template-areas: 
+      "header header"
+      "sidebar main";
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: 70px 1fr;
+    height: 100vh;
+    background: var(--neutral-50);
+  }
+
+  .admin-header {
+    grid-area: header;
+    background: white;
+    border-bottom: 1px solid var(--neutral-200);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .admin-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .admin-logo h2 {
+    color: var(--primary-blue);
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .admin-logo span {
+    color: var(--neutral-600);
+    font-size: 0.875rem;
+  }
+
+  .admin-actions {
+    display: flex;
+    gap: 12px;
+  }
+
+  .admin-sidebar {
+    grid-area: sidebar;
+    background: white;
+    border-right: 1px solid var(--neutral-200);
+    overflow-y: auto;
+    padding: 24px 0;
+  }
+
+  .nav-section {
+    margin-bottom: 32px;
+  }
+
+  .nav-section h3 {
+    color: var(--neutral-800);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 24px 16px;
+  }
+
+  .nav-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 12px 24px;
+    color: var(--neutral-700);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover {
+    background: var(--neutral-100);
+    color: var(--primary-blue);
+  }
+
+  .nav-link.active {
+    background: var(--primary-blue);
+    color: white;
+    border-left-color: var(--accent-gold);
+  }
+
+  .admin-main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .admin-toolbar {
+    background: white;
+    border-bottom: 1px solid var(--neutral-200);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .toolbar-right {
+    display: flex;
+    gap: 12px;
+  }
+
+  .page-editor {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    overflow: hidden;
+  }
+
+  .editor-canvas {
+    background: white;
+    overflow-y: auto;
+    padding: 24px;
+    border-right: 1px solid var(--neutral-200);
+  }
+
+  .properties-panel {
+    background: var(--neutral-50);
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  .properties-panel h3 {
+    margin-top: 0;
+    color: var(--neutral-800);
+  }
+
+  /* Editable Sections */
+  .editable-section {
+    border: 2px dashed transparent;
+    margin: 16px 0;
+    padding: 16px;
+    border-radius: 8px;
+    position: relative;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .editable-section:hover {
+    border-color: var(--primary-blue);
+    background: rgba(30, 58, 138, 0.05);
+  }
+
+  .editable-section.selected {
+    border-color: var(--accent-gold);
+    background: rgba(245, 158, 11, 0.1);
+  }
+
+  .section-controls {
+    position: absolute;
+    top: -12px;
+    right: 8px;
+    display: none;
+    gap: 4px;
+  }
+
+  .editable-section:hover .section-controls,
+  .editable-section.selected .section-controls {
+    display: flex;
+  }
+
+  .control-btn {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .control-btn:hover {
+    background: var(--primary-blue-dark);
+  }
+
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+  }
+
+  .modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 900px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .modal-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--neutral-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--neutral-500);
+  }
+
+  .modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: 60vh;
+  }
+
+  .section-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+  }
+
+  .section-template {
+    border: 2px solid var(--neutral-200);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .section-template:hover {
+    border-color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+
+  .section-preview {
+    height: 120px;
+    background: var(--neutral-100);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .preview-hero {
+    width: 80%;
+    height: 60%;
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-gold));
+    border-radius: 4px;
+  }
+
+  .preview-text-image {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 80%;
+    height: 60%;
+  }
+
+  .preview-text-image::before {
+    content: '';
+    background: var(--neutral-300);
+    border-radius: 4px;
+  }
+
+  .preview-text-image::after {
+    content: '';
+    background: var(--primary-blue);
+    border-radius: 4px;
+  }
+
+  .preview-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    width: 80%;
+    height: 60%;
+  }
+
+  .preview-cards::before,
+  .preview-cards::after {
+    content: '';
+    background: var(--neutral-300);
+    border-radius: 2px;
+  }
+
+  .section-template h4 {
+    margin: 0 0 8px;
+    color: var(--neutral-800);
+  }
+
+  .section-template p {
+    margin: 0;
+    color: var(--neutral-600);
+    font-size: 0.875rem;
+  }
+
+  /* Form Styles */
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--neutral-700);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--neutral-200);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+  }
+
+  .color-picker {
+    width: 60px;
+    height: 40px;
+    padding: 0;
+    border: 2px solid var(--neutral-200);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 1024px) {
+    #admin-app {
+      grid-template-columns: 1fr;
+      grid-template-areas: 
+        "header"
+        "main";
+    }
+
+    .admin-sidebar {
+      display: none;
+    }
+
+    .page-editor {
+      grid-template-columns: 1fr;
+    }
+
+    .properties-panel {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Check authentication
+  if (!localStorage.getItem('churchAdmin')) {
+    window.location.href = '/admin/login';
+  }
+
+  let currentPage = 'home';
+  let selectedElement = null;
+  let pageData = {};
+
+  // Initialize the admin interface
+  document.addEventListener('DOMContentLoaded', function() {
+    loadPageEditor('home');
+  });
+
+  function logout() {
+    localStorage.removeItem('churchAdmin');
+    window.location.href = '/admin/login';
+  }
+
+  function previewSite() {
+    window.open('/', '_blank');
+  }
+
+  function loadPageEditor(page) {
+    currentPage = page;
+    document.getElementById('page-title').textContent = `Éditeur de Page - ${getPageTitle(page)}`;
+    
+    // Update active nav link
+    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Load page content
+    loadPageContent(page);
+  }
+
+  function loadComponentEditor(component) {
+    document.getElementById('page-title').textContent = `Éditeur de Composant - ${getComponentTitle(component)}`;
+    loadComponentContent(component);
+  }
+
+  function loadSettings(setting) {
+    document.getElementById('page-title').textContent = `Paramètres - ${getSettingTitle(setting)}`;
+    loadSettingsContent(setting);
+  }
+
+  function getPageTitle(page) {
+    const titles = {
+      'home': 'Accueil',
+      'about': 'À Propos',
+      'services': 'Services',
+      'events': 'Événements',
+      'ministries': 'Ministères',
+      'contact': 'Contact',
+      'donate': 'Dons'
+    };
+    return titles[page] || page;
+  }
+
+  function getComponentTitle(component) {
+    const titles = {
+      'header': 'En-tête',
+      'footer': 'Pied de page',
+      'hero': 'Section Hero'
+    };
+    return titles[component] || component;
+  }
+
+  function getSettingTitle(setting) {
+    const titles = {
+      'general': 'Général',
+      'seo': 'SEO',
+      'social': 'Réseaux Sociaux'
+    };
+    return titles[setting] || setting;
+  }
+
+  function loadPageContent(page) {
+    const canvas = document.getElementById('editor-canvas');
+    
+    // Sample content for home page
+    if (page === 'home') {
+      canvas.innerHTML = `
+        <div class="editable-section" onclick="selectElement(this)" data-type="hero">
+          <div class="section-controls">
+            <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+            <button class="control-btn" onclick="moveUp(this)" title="Monter">↑</button>
+            <button class="control-btn" onclick="moveDown(this)" title="Descendre">↓</button>
+            <button class="control-btn" onclick="deleteElement(this)" title="Supprimer">🗑️</button>
+          </div>
+          <div style="background: linear-gradient(135deg, var(--primary-blue), var(--accent-gold)); color: white; padding: 60px 40px; border-radius: 12px; text-align: center;">
+            <h1 style="color: white; margin-bottom: 16px;">Bienvenue à l'Église de Gatineau</h1>
+            <p style="font-size: 1.25rem; margin-bottom: 32px;">Une communauté de foi, d'espoir et d'amour</p>
+            <button class="btn btn-primary" style="margin-right: 16px;">Nous Rejoindre</button>
+            <button class="btn btn-outline" style="border-color: white; color: white;">En Savoir Plus</button>
+          </div>
+        </div>
+
+        <div class="editable-section" onclick="selectElement(this)" data-type="text-image">
+          <div class="section-controls">
+            <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+            <button class="control-btn" onclick="moveUp(this)" title="Monter">↑</button>
+            <button class="control-btn" onclick="moveDown(this)" title="Descendre">↓</button>
+            <button class="control-btn" onclick="deleteElement(this)" title="Supprimer">🗑️</button>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 40px 0;">
+            <div>
+              <h2>Notre Mission</h2>
+              <p>L'Église de Gatineau est une communauté de foi dynamique dédiée à l'amour de Dieu et au service de notre communauté.</p>
+              <button class="btn btn-primary">En Savoir Plus</button>
+            </div>
+            <div>
+              <img src="https://images.pexels.com/photos/8468570/pexels-photo-8468570.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Communauté" style="width: 100%; border-radius: 12px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="editable-section" onclick="selectElement(this)" data-type="cards">
+          <div class="section-controls">
+            <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+            <button class="control-btn" onclick="moveUp(this)" title="Monter">↑</button>
+            <button class="control-btn" onclick="moveDown(this)" title="Descendre">↓</button>
+            <button class="control-btn" onclick="deleteElement(this)" title="Supprimer">🗑️</button>
+          </div>
+          <div style="padding: 40px 0;">
+            <h2 style="text-align: center; margin-bottom: 40px;">Nos Services</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+              <div class="card">
+                <h3>Service Dominical</h3>
+                <p>Dimanche 9h00 & 11h00</p>
+                <p>Culte traditionnel avec musique et prédication</p>
+              </div>
+              <div class="card">
+                <h3>Réunion de Prière</h3>
+                <p>Mercredi 19h00</p>
+                <p>Temps de prière communautaire</p>
+              </div>
+              <div class="card">
+                <h3>École du Dimanche</h3>
+                <p>Dimanche 9h00</p>
+                <p>Programmes pour enfants et adultes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      canvas.innerHTML = `
+        <div class="editable-section" onclick="selectElement(this)" data-type="hero">
+          <div class="section-controls">
+            <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+            <button class="control-btn" onclick="moveUp(this)" title="Monter">↑</button>
+            <button class="control-btn" onclick="moveDown(this)" title="Descendre">↓</button>
+            <button class="control-btn" onclick="deleteElement(this)" title="Supprimer">🗑️</button>
+          </div>
+          <div style="background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark)); color: white; padding: 60px 40px; border-radius: 12px; text-align: center;">
+            <h1 style="color: white; margin-bottom: 16px;">${getPageTitle(page)}</h1>
+            <p style="font-size: 1.25rem;">Contenu de la page ${getPageTitle(page)}</p>
+          </div>
+        </div>
+        <div style="padding: 40px 0; text-align: center;">
+          <p>Cliquez sur "Ajouter Section" pour commencer à construire cette page.</p>
+        </div>
+      `;
+    }
+  }
+
+  function selectElement(element) {
+    // Remove previous selection
+    document.querySelectorAll('.editable-section').forEach(el => el.classList.remove('selected'));
+    
+    // Select current element
+    element.classList.add('selected');
+    selectedElement = element;
+    
+    // Update properties panel
+    updatePropertiesPanel(element);
+  }
+
+  function updatePropertiesPanel(element) {
+    const panel = document.querySelector('.properties-content');
+    const type = element.dataset.type;
+    
+    let content = '';
+    
+    switch(type) {
+      case 'hero':
+        content = `
+          <div class="form-group">
+            <label>Titre Principal</label>
+            <input type="text" value="Bienvenue à l'Église de Gatineau" onchange="updateElementProperty('title', this.value)">
+          </div>
+          <div class="form-group">
+            <label>Sous-titre</label>
+            <input type="text" value="Une communauté de foi, d'espoir et d'amour" onchange="updateElementProperty('subtitle', this.value)">
+          </div>
+          <div class="form-group">
+            <label>Couleur de fond</label>
+            <input type="color" class="color-picker" value="#1e3a8a" onchange="updateElementProperty('background', this.value)">
+          </div>
+          <div class="form-group">
+            <label>Image de fond</label>
+            <input type="url" placeholder="URL de l'image" onchange="updateElementProperty('backgroundImage', this.value)">
+          </div>
+        `;
+        break;
+      case 'text-image':
+        content = `
+          <div class="form-group">
+            <label>Titre</label>
+            <input type="text" value="Notre Mission" onchange="updateElementProperty('title', this.value)">
+          </div>
+          <div class="form-group">
+            <label>Texte</label>
+            <textarea rows="4" onchange="updateElementProperty('text', this.value)">L'Église de Gatineau est une communauté de foi dynamique...</textarea>
+          </div>
+          <div class="form-group">
+            <label>Image URL</label>
+            <input type="url" value="https://images.pexels.com/photos/8468570/pexels-photo-8468570.jpeg" onchange="updateElementProperty('image', this.value)">
+          </div>
+          <div class="form-group">
+            <label>Position de l'image</label>
+            <select onchange="updateElementProperty('imagePosition', this.value)">
+              <option value="right">Droite</option>
+              <option value="left">Gauche</option>
+            </select>
+          </div>
+        `;
+        break;
+      case 'cards':
+        content = `
+          <div class="form-group">
+            <label>Titre de la section</label>
+            <input type="text" value="Nos Services" onchange="updateElementProperty('sectionTitle', this.value)">
+          </div>
+          <div class="form-group">
+            <label>Nombre de colonnes</label>
+            <select onchange="updateElementProperty('columns', this.value)">
+              <option value="2">2 colonnes</option>
+              <option value="3" selected>3 colonnes</option>
+              <option value="4">4 colonnes</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-outline" onclick="addCard()">+ Ajouter une carte</button>
+          </div>
+        `;
+        break;
+      default:
+        content = '<p>Sélectionnez un élément pour voir ses propriétés</p>';
+    }
+    
+    panel.innerHTML = content;
+  }
+
+  function updateElementProperty(property, value) {
+    if (!selectedElement) return;
+    
+    // This would update the actual element properties
+    console.log(`Updating ${property} to ${value}`);
+    
+    // In a real implementation, this would update the element's content/style
+    // and save the changes to the backend
+  }
+
+  function addSection() {
+    document.getElementById('section-library').classList.add('active');
+  }
+
+  function closeSectionLibrary() {
+    document.getElementById('section-library').classList.remove('active');
+  }
+
+  function addSectionTemplate(type) {
+    const canvas = document.getElementById('editor-canvas');
+    let sectionHTML = '';
+    
+    switch(type) {
+      case 'hero':
+        sectionHTML = `
+          <div class="editable-section" onclick="selectElement(this)" data-type="hero">
+            <div class="section-controls">
+              <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+              <button class="control-btn" onclick="moveUp(this)" title="Monter">↑</button>
+              <button class="control-btn" onclick="moveDown(this)" title="Descendre">↓</button>
+              <button class="control-btn" onclick="deleteElement(this)" title="Supprimer">🗑️</button>
+            </div>
+            <div style="background: linear-gradient(135deg, var(--primary-blue), var(--accent-gold)); color: white; padding: 60px 40px; border-radius: 12px; text-align: center;">
+              <h1 style="color: white; margin-bottom: 16px;">Nouveau Titre</h1>
+              <p style="font-size: 1.25rem; margin-bottom: 32px;">Nouveau sous-titre</p>
+              <button class="btn btn-primary">Bouton Principal</button>
+            </div>
+          </div>
+        `;
+        break;
+      case 'text-image':
+        sectionHTML = `
+          <div class="editable-section" onclick="selectElement(this)" data-type="text-image">
+            <div class="section-controls">
+              <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+              <button class="control-btn" onclick="moveUp(this)" title="Monter">↑</button>
+              <button class="control-btn" onclick="moveDown(this)" title="Descendre">↓</button>
+              <button class="control-btn" onclick="deleteElement(this)" title="Supprimer">🗑️</button>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 40px 0;">
+              <div>
+                <h2>Nouveau Titre</h2>
+                <p>Votre texte ici...</p>
+                <button class="btn btn-primary">En Savoir Plus</button>
+              </div>
+              <div>
+                <img src="https://images.pexels.com/photos/8468570/pexels-photo-8468570.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Image" style="width: 100%; border-radius: 12px;">
+              </div>
+            </div>
+          </div>
+        `;
+        break;
+      case 'cards':
+        sectionHTML = `
+          <div class="editable-section" onclick="selectElement(this)" data-type="cards">
+            <div class="section-controls">
+              <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+              <button class="control-btn" onclick="moveUp(this)" title="Monter">↑</button>
+              <button class="control-btn" onclick="moveDown(this)" title="Descendre">↓</button>
+              <button class="control-btn" onclick="deleteElement(this)" title="Supprimer">🗑️</button>
+            </div>
+            <div style="padding: 40px 0;">
+              <h2 style="text-align: center; margin-bottom: 40px;">Titre de Section</h2>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+                <div class="card">
+                  <h3>Carte 1</h3>
+                  <p>Description de la carte 1</p>
+                </div>
+                <div class="card">
+                  <h3>Carte 2</h3>
+                  <p>Description de la carte 2</p>
+                </div>
+                <div class="card">
+                  <h3>Carte 3</h3>
+                  <p>Description de la carte 3</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        break;
+      case 'testimonials':
+        sectionHTML = `
+          <div class="editable-section" onclick="selectElement(this)" data-type="testimonials">
+            <div class="section-controls">
+              <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+              <button class="control-btn" onclick="moveUp(this)" title="Monter">↑</button>
+              <button class="control-btn" onclick="moveDown(this)" title="Descendre">↓</button>
+              <button class="control-btn" onclick="deleteElement(this)" title="Supprimer">🗑️</button>
+            </div>
+            <div style="padding: 40px 0; background: var(--neutral-50); border-radius: 12px;">
+              <h2 style="text-align: center; margin-bottom: 40px;">Témoignages</h2>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; padding: 0 20px;">
+                <div class="card" style="text-align: center;">
+                  <p style="font-style: italic; margin-bottom: 16px;">"Cette église a transformé ma vie..."</p>
+                  <strong>- Marie Dupont</strong>
+                </div>
+                <div class="card" style="text-align: center;">
+                  <p style="font-style: italic; margin-bottom: 16px;">"Une communauté accueillante et aimante..."</p>
+                  <strong>- Jean Martin</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        break;
+      case 'contact-form':
+        sectionHTML = `
+          <div class="editable-section" onclick="selectElement(this)" data-type="contact-form">
+            <div class="section-controls">
+              <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+              <button class="control-btn" onclick="moveUp(this)" title="Monter">↑</button>
+              <button class="control-btn" onclick="moveDown(this)" title="Descendre">↓</button>
+              <button class="control-btn" onclick="deleteElement(this)" title="Supprimer">🗑️</button>
+            </div>
+            <div style="padding: 40px 0;">
+              <h2 style="text-align: center; margin-bottom: 40px;">Nous Contacter</h2>
+              <div style="max-width: 600px; margin: 0 auto;">
+                <div class="card">
+                  <form>
+                    <div class="form-group">
+                      <label>Nom</label>
+                      <input type="text" placeholder="Votre nom">
+                    </div>
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" placeholder="votre@email.com">
+                    </div>
+                    <div class="form-group">
+                      <label>Message</label>
+                      <textarea rows="4" placeholder="Votre message..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        break;
+      case 'gallery':
+        sectionHTML = `
+          <div class="editable-section" onclick="selectElement(this)" data-type="gallery">
+            <div class="section-controls">
+              <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+              <button class="control-btn" onclick="moveUp(this)" title="Monter">↑</button>
+              <button class="control-btn" onclick="moveDown(this)" title="Descendre">↓</button>
+              <button class="control-btn" onclick="deleteElement(this)" title="Supprimer">🗑️</button>
+            </div>
+            <div style="padding: 40px 0;">
+              <h2 style="text-align: center; margin-bottom: 40px;">Galerie Photos</h2>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                <img src="https://images.pexels.com/photos/8468570/pexels-photo-8468570.jpeg?auto=compress&cs=tinysrgb&w=400" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                <img src="https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=400" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                <img src="https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&cs=tinysrgb&w=400" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                <img src="https://images.pexels.com/photos/6994835/pexels-photo-6994835.jpeg?auto=compress&cs=tinysrgb&w=400" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+              </div>
+            </div>
+          </div>
+        `;
+        break;
+    }
+    
+    canvas.insertAdjacentHTML('beforeend', sectionHTML);
+    closeSectionLibrary();
+  }
+
+  function editElement(btn) {
+    event.stopPropagation();
+    const section = btn.closest('.editable-section');
+    selectElement(section);
+    // Focus on properties panel
+    document.querySelector('.properties-panel').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function moveUp(btn) {
+    event.stopPropagation();
+    const section = btn.closest('.editable-section');
+    const prev = section.previousElementSibling;
+    if (prev && prev.classList.contains('editable-section')) {
+      section.parentNode.insertBefore(section, prev);
+    }
+  }
+
+  function moveDown(btn) {
+    event.stopPropagation();
+    const section = btn.closest('.editable-section');
+    const next = section.nextElementSibling;
+    if (next && next.classList.contains('editable-section')) {
+      section.parentNode.insertBefore(next, section);
+    }
+  }
+
+  function deleteElement(btn) {
+    event.stopPropagation();
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette section ?')) {
+      const section = btn.closest('.editable-section');
+      section.remove();
+      
+      // Clear properties panel
+      document.querySelector('.properties-content').innerHTML = '<p>Sélectionnez un élément pour modifier ses propriétés</p>';
+    }
+  }
+
+  function savePage() {
+    // In a real implementation, this would save to backend
+    alert('Page sauvegardée avec succès!');
+    console.log('Saving page:', currentPage);
+  }
+
+  function publishPage() {
+    // In a real implementation, this would publish the page
+    alert('Page publiée avec succès!');
+    console.log('Publishing page:', currentPage);
+  }
+
+  function loadComponentContent(component) {
+    const canvas = document.getElementById('editor-canvas');
+    
+    if (component === 'header') {
+      canvas.innerHTML = `
+        <div class="editable-section" onclick="selectElement(this)" data-type="header">
+          <div class="section-controls">
+            <button class="control-btn" onclick="editElement(this)" title="Modifier">✏️</button>
+          </div>
+          <div style="background: white; padding: 16px 0; border-bottom: 1px solid var(--neutral-200);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h2 style="color: var(--primary-blue); margin: 0;">Église de Gatineau</h2>
+              <nav style="display: flex; gap: 32px;">
+                <a href="#" style="color: var(--neutral-700);">Accueil</a>
+                <a href="#" style="color: var(--neutral-700);">À Propos</a>
+                <a href="#" style="color: var(--neutral-700);">Services</a>
+                <a href="#" style="color: var(--neutral-700);">Contact</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  function loadSettingsContent(setting) {
+    const canvas = document.getElementById('editor-canvas');
+    
+    if (setting === 'general') {
+      canvas.innerHTML = `
+        <div class="card" style="max-width: 600px;">
+          <h3>Paramètres Généraux</h3>
+          <div class="form-group">
+            <label>Nom de l'église</label>
+            <input type="text" value="Église de Gatineau">
+          </div>
+          <div class="form-group">
+            <label>Adresse</label>
+            <input type="text" value="123 Rue Principale, Gatineau, QC">
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" value="(819) 555-0123">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" value="info@eglisegatineau.ca">
+          </div>
+          <button class="btn btn-primary">Sauvegarder</button>
+        </div>
+      `;
+    }
+  }
+</script>

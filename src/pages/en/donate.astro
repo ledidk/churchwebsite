@@ -1,0 +1,267 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout title="Donate - Gatineau Church" lang="en">
+  <Header lang="en" />
+  
+  <main>
+    <section class="hero-small">
+      <div class="container">
+        <h1>Donate</h1>
+        <p>Your generosity helps us continue our mission in the Gatineau community</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="align-items: center; gap: 64px;">
+          <div>
+            <h2>Why Give?</h2>
+            <p>Your donations allow us to maintain our services, improve our facilities, and extend our reach in the community. Every contribution, large or small, makes a significant difference in the lives of those we serve.</p>
+            <p>We use your donations to:</p>
+            <ul style="margin-left: 24px; margin-bottom: 24px;">
+              <li>Maintain and improve our facilities</li>
+              <li>Support our community programs</li>
+              <li>Help families in need</li>
+              <li>Fund our ministries and activities</li>
+              <li>Support local and international missions</li>
+            </ul>
+          </div>
+          <div>
+            <img src="https://images.pexels.com/photos/6994835/pexels-photo-6994835.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Generosity" style="width: 100%; border-radius: 16px;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Ways to Give</h2>
+          <p>Choose the method that works best for you</p>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>One-Time Gift</h3>
+            <p>Make a secure one-time donation online. You can choose the amount and destination of your gift.</p>
+            <button class="btn btn-primary" onclick="showDonationForm('one-time')">Give Now</button>
+          </div>
+          
+          <div class="card">
+            <h3>Monthly Giving</h3>
+            <p>Support our mission regularly with an automatic monthly donation. You can modify or cancel at any time.</p>
+            <button class="btn btn-primary" onclick="showDonationForm('monthly')">Monthly Gift</button>
+          </div>
+          
+          <div class="card">
+            <h3>Check Donation</h3>
+            <p>You can also donate by check in person on Sunday or by mail to our address.</p>
+            <a href="/en/contact" class="btn btn-outline">Contact Info</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="donation-form" id="donation-form" style="display: none;">
+          <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <h3>Donation Form</h3>
+            <form id="donate-form">
+              <div class="form-group">
+                <label for="amount">Amount ($)</label>
+                <input type="number" id="amount" name="amount" min="1" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="frequency">Frequency</label>
+                <select id="frequency" name="frequency" required>
+                  <option value="one-time">One-time gift</option>
+                  <option value="monthly">Monthly gift</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="designation">Donation designation</label>
+                <select id="designation" name="designation" required>
+                  <option value="general">General fund</option>
+                  <option value="building">Building fund</option>
+                  <option value="missions">Missions</option>
+                  <option value="youth">Youth ministry</option>
+                  <option value="community">Community outreach</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="donor-name">Full Name</label>
+                <input type="text" id="donor-name" name="donor-name" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="donor-email">Email Address</label>
+                <input type="email" id="donor-email" name="donor-email" required>
+              </div>
+              
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" id="anonymous" name="anonymous">
+                  Anonymous donation
+                </label>
+              </div>
+              
+              <button type="submit" class="btn btn-primary" style="width: 100%;">Proceed to Payment</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Impact of Your Gifts</h2>
+          <p>Here's how your contributions transform lives</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>This Year</h3>
+            <ul style="margin-left: 24px;">
+              <li>500+ families helped by our food bank</li>
+              <li>150+ children in our youth programs</li>
+              <li>50+ people baptized</li>
+              <li>25+ community projects supported</li>
+            </ul>
+          </div>
+          
+          <div class="card">
+            <h3>Future Projects</h3>
+            <ul style="margin-left: 24px;">
+              <li>Community center renovation</li>
+              <li>New seniors program</li>
+              <li>Expanded immigrant services</li>
+              <li>Increased international mission support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container text-center">
+        <h2>Questions About Giving?</h2>
+        <p>Our team is here to help with all your questions about donations and philanthropy.</p>
+        <div style="margin-top: 32px;">
+          <a href="/en/contact" class="btn btn-primary">Contact Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang="en" />
+</Layout>
+
+<style>
+  main {
+    padding-top: 80px;
+  }
+
+  .hero-small {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    color: white;
+    padding: 120px 0 80px;
+    text-align: center;
+  }
+
+  .hero-small h1 {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 24px;
+  }
+
+  .hero-small p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--neutral-700);
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--neutral-200);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+  }
+
+  .form-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  ul {
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .hero-small {
+      padding: 100px 0 60px;
+    }
+
+    .hero-small h1 {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<script>
+  function showDonationForm(type) {
+    const form = document.getElementById('donation-form');
+    const frequencySelect = document.getElementById('frequency');
+    
+    if (type === 'monthly') {
+      frequencySelect.value = 'monthly';
+    } else {
+      frequencySelect.value = 'one-time';
+    }
+    
+    form.style.display = 'block';
+    form.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  document.getElementById('donate-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Here you would integrate with your payment processor
+    // For demonstration, we'll show an alert
+    alert('To continue with payment, please configure your Stripe payment processor. Contact us for more information.');
+  });
+</script>

@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="À Propos - Église de Gatineau" lang="fr">
+  <Header lang="fr" />
+  
+  <main>
+    <section class="hero-small">
+      <div class="container">
+        <h1>À Propos de Notre Église</h1>
+        <p>Découvrez notre histoire, nos valeurs et notre vision pour la communauté de Gatineau</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="align-items: center; gap: 64px;">
+          <div>
+            <h2>Notre Histoire</h2>
+            <p>L'Église de Gatineau a été fondée en 1973 par un groupe de familles dévouées qui souhaitaient créer un lieu de culte accueillant dans la région. Depuis lors, nous avons grandi pour devenir une communauté de foi dynamique qui sert des centaines de familles dans la région de Gatineau.</p>
+            <p>Au fil des décennies, nous avons élargi nos ministères pour inclure des programmes pour tous les âges, des services communautaires et un engagement actif dans l'aide aux plus démunis de notre communauté.</p>
+          </div>
+          <div>
+            <img src="https://images.pexels.com/photos/372748/pexels-photo-372748.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Église historique" style="width: 100%; border-radius: 16px;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Nos Valeurs</h2>
+          <p>Les principes qui guident notre communauté de foi</p>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Amour</h3>
+            <p>Nous croyons que l'amour de Dieu est le fondement de tout ce que nous faisons. Nous nous efforçons d'aimer inconditionnellement et de servir avec compassion.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Communauté</h3>
+            <p>Nous valorisons la communion fraternelle et créons un environnement où chacun peut appartenir et contribuer à la famille de Dieu.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Service</h3>
+            <p>Nous sommes appelés à servir notre communauté locale et au-delà, répondant aux besoins physiques et spirituels de ceux qui nous entourent.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Notre Équipe Pastorale</h2>
+          <p>Des leaders dévoués au service de notre communauté</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card text-center">
+            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop" alt="Pasteur Principal" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin: 0 auto 24px;">
+            <h3>Pasteur Jean Dubois</h3>
+            <p><strong>Pasteur Principal</strong></p>
+            <p>Avec plus de 20 ans d'expérience ministérielle, le Pasteur Dubois guide notre communauté avec sagesse et compassion. Il est marié à Marie et père de trois enfants.</p>
+          </div>
+          
+          <div class="card text-center">
+            <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop" alt="Pasteur Associé" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin: 0 auto 24px;">
+            <h3>Pasteur Marie Tremblay</h3>
+            <p><strong>Pasteur Associé</strong></p>
+            <p>Spécialisée dans les ministères familiaux et l'accompagnement pastoral, le Pasteur Tremblay apporte une approche chaleureuse et bienveillante à notre équipe.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Notre Vision</h2>
+          <p>Construire un avenir d'espoir et de transformation</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Vision Locale</h3>
+            <p>Être une église qui transforme la communauté de Gatineau par l'amour du Christ, offrant espoir et soutien à tous ceux qui en ont besoin.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Vision Mondiale</h3>
+            <p>Participer à la mission mondiale de l'Église en soutenant des projets missionnaires et en contribuant à l'évangélisation et au développement communautaire.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container text-center">
+        <h2>Rejoignez Notre Famille</h2>
+        <p>Que vous soyez nouveau dans la foi ou que vous cherchiez une nouvelle église, nous vous invitons à découvrir ce que Dieu fait dans notre communauté.</p>
+        <div style="margin-top: 32px;">
+          <a href="/contact" class="btn btn-primary">Nous Contacter</a>
+          <a href="/services" class="btn btn-outline">Nos Services</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang="fr" />
+</Layout>
+
+<style>
+  main {
+    padding-top: 80px;
+  }
+
+  .hero-small {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    color: white;
+    padding: 120px 0 80px;
+    text-align: center;
+  }
+
+  .hero-small h1 {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 24px;
+  }
+
+  .hero-small p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    .hero-small {
+      padding: 100px 0 60px;
+    }
+
+    .hero-small h1 {
+      font-size: 2.5rem;
+    }
+  }
+</style>

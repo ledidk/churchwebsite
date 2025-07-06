@@ -1,0 +1,132 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Hero from '../../components/Hero.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout title="Gatineau Church - Welcome" lang="en">
+  <Header lang="en" />
+  
+  <main>
+    <Hero lang="en" />
+    
+    <!-- About Section -->
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="align-items: center;">
+          <div>
+            <h2>Our Mission</h2>
+            <p>Gatineau Church is a dynamic faith community dedicated to God's love and service to our community. We believe in the transformative power of the Gospel and strive to create a welcoming environment where everyone can grow in their faith.</p>
+            <p>For over 50 years, we have served the Gatineau community with passion and dedication, offering spiritual services, community programs, and support to families in need.</p>
+            <a href="/en/about" class="btn btn-primary">Learn More</a>
+          </div>
+          <div>
+            <img src="https://images.pexels.com/photos/8468570/pexels-photo-8468570.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Church community" style="width: 100%; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Our Services</h2>
+          <p>Join us for worship, prayer, and fellowship</p>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Sunday Service</h3>
+            <p><strong>Sunday 9:00 AM & 11:00 AM</strong></p>
+            <p>Traditional worship with music, preaching, and communion. A time of praise and celebration for the whole family.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Evening Service</h3>
+            <p><strong>Sunday 6:00 PM</strong></p>
+            <p>More intimate service with prayer time, testimonies, and in-depth Bible study.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Prayer Meeting</h3>
+            <p><strong>Wednesday 7:00 PM</strong></p>
+            <p>Community prayer time for church and community needs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ministries Section -->
+    <section class="section">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Our Ministries</h2>
+          <p>Programs for all ages and needs</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Youth Ministry</h3>
+            <p>Activities, camps, and special programs for youth aged 12-18. We encourage spiritual growth in a fun and safe environment.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Sunday School</h3>
+            <p>Educational programs for children of all ages, with age-appropriate teachings and activities.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Family Ministry</h3>
+            <p>Support and counseling for families, with marriage, parenting, and conflict resolution programs.</p>
+          </div>
+          
+          <div class="card">
+            <h3>Community Outreach</h3>
+            <p>Food assistance programs, senior support, and aid to families in need.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 64px;">
+          <h2>Contact Us</h2>
+          <p>We would love to welcome you into our community</p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Contact Information</h3>
+            <p><strong>Address:</strong><br>123 Main Street<br>Gatineau, QC J8X 1A1</p>
+            <p><strong>Phone:</strong><br>(819) 555-0123</p>
+            <p><strong>Email:</strong><br>info@eglisegatineau.ca</p>
+          </div>
+          
+          <div class="card">
+            <h3>Office Hours</h3>
+            <p><strong>Monday - Friday:</strong><br>9:00 AM - 5:00 PM</p>
+            <p><strong>Saturday:</strong><br>9:00 AM - 12:00 PM</p>
+            <p><strong>Sunday:</strong><br>Closed (Services all day)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang="en" />
+</Layout>
+
+<style>
+  main {
+    padding-top: 80px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
