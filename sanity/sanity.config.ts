@@ -7,7 +7,8 @@ export default defineConfig({
   name: 'default',
   title: 'Église de Gatineau',
 
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || '',
+  // ✅ THIS is the Sanity project identifier
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
   dataset: process.env.SANITY_STUDIO_DATASET || 'production',
 
   plugins: [deskTool(), visionTool()],
