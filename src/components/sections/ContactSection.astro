@@ -1,0 +1,64 @@
+---
+import { getSiteSettings } from '../../lib/sanity/queries';
+import { getLocalizedString } from '../../lib/sanity/utils';
+import type { LanguageCode } from '../../lib/sanity/languages';
+
+interface Props {
+  section: any;
+  lang: LanguageCode;
+}
+
+const { section, lang } = Astro.props;
+
+const heading = section.heading ? getLocalizedString(section.heading, lang) : null;
+const subheading = section.subheading ? getLocalizedString(section.subheading, lang) : null;
+
+// Fetch contact info from site settings
+const siteSettings = await getSiteSettings();
+
+const address = siteSettings?.contactInfo?.address
+  ? getLocalizedString(siteSettings.contactInfo.address, lang)
+  : (lang === 'fr' ? '123 Rue Principale, Gatineau, QC J8X 1A1' : '123 Main Street, Gatineau, QC J8X 1A1');
+
+const phone = siteSettings?.contactInfo?.phone || '(819) 555-0123';
+const email = siteSettings?.contactInfo?.email || 'info@eglisegatineau.ca';
+
+const addressLabel = lang === 'fr' ? 'Adresse' : 'Address';
+const phoneLabel = lang === 'fr' ? 'Téléphone' : 'Phone';
+const emailLabel = lang === 'fr' ? 'Courriel' : 'Email';
+const contactInfoTitle = lang === 'fr' ? 'Informations de Contact' : 'Contact Information';
+const officeHoursTitle = lang === 'fr' ? 'Horaires de Bureau' : 'Office Hours';
+---
+
+<section class="section section-alt">
+  <div class="container">
+    {(heading || subheading) && (
+      <div class="text-center" style="margin-bottom: 64px;">
+        {heading && <h2>{heading}</h2>}
+        {subheading && <p>{subheading}</p>}
+      </div>
+    )}
+    
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>{contactInfoTitle}</h3>
+        <p><strong>{addressLabel}:</strong><br/>{address}</p>
+        <p><strong>{phoneLabel}:</strong><br/>{phone}</p>
+        <p><strong>{emailLabel}:</strong><br/>{email}</p>
+      </div>
+      
+      <div class="card">
+        <h3>{officeHoursTitle}</h3>
+        <p><strong>{lang === 'fr' ? 'Lundi - Vendredi' : 'Monday - Friday'}:</strong><br/>9h00 - 17h00</p>
+        <p><strong>{lang === 'fr' ? 'Samedi' : 'Saturday'}:</strong><br/>9h00 - 12h00</p>
+        <p><strong>{lang === 'fr' ? 'Dimanche' : 'Sunday'}:</strong><br/>{lang === 'fr' ? 'Fermé (Services toute la journée)' : 'Closed (Services all day)'}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-alt {
+    background-color: white;
+  }
+</style>

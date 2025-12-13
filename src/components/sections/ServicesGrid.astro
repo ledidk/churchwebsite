@@ -1,0 +1,50 @@
+---
+import { getServices } from '../../lib/sanity/queries';
+import { getLocalizedString, getLocalizedText } from '../../lib/sanity/utils';
+import type { LanguageCode } from '../../lib/sanity/languages';
+
+interface Props {
+  section: any;
+  lang: LanguageCode;
+}
+
+const { section, lang } = Astro.props;
+
+const heading = section.heading ? getLocalizedString(section.heading, lang) : null;
+const subheading = section.subheading ? getLocalizedString(section.subheading, lang) : null;
+
+// Fetch services from Sanity
+const services = await getServices();
+---
+
+<section class="section section-alt">
+  <div class="container">
+    {(heading || subheading) && (
+      <div class="text-center" style="margin-bottom: 64px;">
+        {heading && <h2>{heading}</h2>}
+        {subheading && <p>{subheading}</p>}
+      </div>
+    )}
+    
+    <div class="grid grid-3">
+      {services.map((service) => {
+        const title = getLocalizedString(service.title, lang);
+        const description = getLocalizedText(service.description, lang);
+        
+        return (
+          <div class="card">
+            <h3>{title}</h3>
+            {service.dayTime && <p><strong>{service.dayTime}</strong></p>}
+            {description && <div set:html={description} />}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-alt {
+    background-color: white;
+  }
+</style>

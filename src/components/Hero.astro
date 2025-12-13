@@ -1,57 +1,84 @@
 ---
-const { lang = 'fr' } = Astro.props;
+import { buildImageUrl } from '../lib/sanity/utils';
+import type { LanguageCode } from '../lib/sanity/languages';
 
-const translations = {
-  fr: {
-    welcome: 'Bienvenue à l\'Église de Gatineau',
-    subtitle: 'Une communauté de foi, d\'espoir et d\'amour au cœur de Gatineau',
-    description: 'Rejoignez-nous pour le culte, la communion et la croissance spirituelle. Tous sont les bienvenus dans notre famille de foi.',
-    joinUs: 'Nous Rejoindre',
-    learnMore: 'En Savoir Plus',
-    nextService: 'Prochain Service',
-    sunday: 'Dimanche',
-    time: '11h00'
-  },
-  en: {
-    welcome: 'Welcome to Gatineau Church',
-    subtitle: 'A community of faith, hope, and love in the heart of Gatineau',
-    description: 'Join us for worship, fellowship, and spiritual growth. All are welcome in our family of faith.',
-    joinUs: 'Join Us',
-    learnMore: 'Learn More',
-    nextService: 'Next Service',
-    sunday: 'Sunday',
-    time: '11:00 AM'
-  }
-};
+interface Props {
+  lang: LanguageCode;
+  headline?: { fr: string; en?: string };
+  subtext?: { fr: string; en?: string };
+  description?: { fr: string; en?: string };
+  backgroundImage?: any;
+  primaryCTA?: { label: { fr: string; en?: string }; url: string };
+  secondaryCTA?: { label: { fr: string; en?: string }; url: string };
+}
 
-const t = translations[lang];
+const { 
+  lang = 'fr',
+  headline,
+  subtext,
+  description,
+  backgroundImage,
+  primaryCTA,
+  secondaryCTA
+} = Astro.props;
+
+// Default content
+const defaultHeadline = lang === 'fr' 
+  ? 'Bienvenue à l\'Église de Gatineau'
+  : 'Welcome to Gatineau Church';
+
+const defaultSubtext = lang === 'fr'
+  ? 'Une communauté de foi, d\'espoir et d\'amour au cœur de Gatineau'
+  : 'A community of faith, hope, and love in the heart of Gatineau';
+
+const defaultDescription = lang === 'fr'
+  ? 'Rejoignez-nous pour le culte, la communion et la croissance spirituelle. Tous sont les bienvenus dans notre famille de foi.'
+  : 'Join us for worship, fellowship, and spiritual growth. All are welcome in our family of faith.';
+
+const headlineText = headline?.[lang] || headline?.fr || defaultHeadline;
+const subtextText = subtext?.[lang] || subtext?.fr || defaultSubtext;
+const descriptionText = description?.[lang] || description?.fr || defaultDescription;
+
+const bgImageUrl = backgroundImage 
+  ? buildImageUrl(backgroundImage).width(1920).height(1080).url()
+  : 'https://images.pexels.com/photos/2291599/pexels-photo-2291599.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop';
+
+const primaryLabel = primaryCTA?.label?.[lang] || primaryCTA?.label?.fr || (lang === 'fr' ? 'Nous Rejoindre' : 'Join Us');
+const primaryUrl = primaryCTA?.url || `/${lang}/services`;
+
+const secondaryLabel = secondaryCTA?.label?.[lang] || secondaryCTA?.label?.fr || (lang === 'fr' ? 'En Savoir Plus' : 'Learn More');
+const secondaryUrl = secondaryCTA?.url || `/${lang}/about`;
+
+const nextServiceLabel = lang === 'fr' ? 'Prochain Service' : 'Next Service';
+const sundayLabel = lang === 'fr' ? 'Dimanche' : 'Sunday';
+const timeLabel = lang === 'fr' ? '11h00' : '11:00 AM';
 ---
 
 <section class="hero">
   <div class="hero-background">
-    <img src="https://images.pexels.com/photos/2291599/pexels-photo-2291599.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" alt="Church interior" />
+    <img src={bgImageUrl} alt="Church interior" />
     <div class="hero-overlay"></div>
   </div>
   
   <div class="hero-content">
     <div class="container">
       <div class="hero-text">
-        <h1>{t.welcome}</h1>
-        <p class="hero-subtitle">{t.subtitle}</p>
-        <p class="hero-description">{t.description}</p>
+        <h1>{headlineText}</h1>
+        <p class="hero-subtitle">{subtextText}</p>
+        <p class="hero-description">{descriptionText}</p>
         
         <div class="hero-actions">
-          <a href={lang === 'fr' ? '/services' : '/en/services'} class="btn btn-primary">{t.joinUs}</a>
-          <a href={lang === 'fr' ? '/about' : '/en/about'} class="btn btn-outline">{t.learnMore}</a>
+          <a href={primaryUrl} class="btn btn-primary">{primaryLabel}</a>
+          <a href={secondaryUrl} class="btn btn-outline">{secondaryLabel}</a>
         </div>
       </div>
       
       <div class="hero-card">
         <div class="service-card">
-          <h3>{t.nextService}</h3>
+          <h3>{nextServiceLabel}</h3>
           <div class="service-info">
-            <span class="service-day">{t.sunday}</span>
-            <span class="service-time">{t.time}</span>
+            <span class="service-day">{sundayLabel}</span>
+            <span class="service-time">{timeLabel}</span>
           </div>
         </div>
       </div>

@@ -1,0 +1,47 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/"
+  to = "/fr"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about"
+  to = "/fr/about"
+  status = 301
+
+[[redirects]]
+  from = "/services"
+  to = "/fr/services"
+  status = 301
+
+[[redirects]]
+  from = "/events"
+  to = "/fr/events"
+  status = 301
+
+[[redirects]]
+  from = "/ministries"
+  to = "/fr/ministries"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/fr/contact"
+  status = 301
+
+[[redirects]]
+  from = "/donate"
+  to = "/fr/donate"
+  status = 301
+
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

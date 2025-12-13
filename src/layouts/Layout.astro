@@ -1,11 +1,18 @@
 ---
+import { getSiteSettings } from '../lib/sanity/queries';
+import type { LanguageCode } from '../lib/sanity/languages';
+
 export interface Props {
   title?: string;
   description?: string;
-  lang?: string;
+  lang?: LanguageCode;
 }
 
 const { title = 'Église de Gatineau | Gatineau Church', description = 'Bienvenue à notre église de Gatineau | Welcome to our Gatineau church', lang = 'fr' } = Astro.props;
+
+// Fetch site settings for theme colors
+const siteSettings = await getSiteSettings();
+const theme = siteSettings?.theme;
 ---
 
 <!doctype html>
@@ -20,6 +27,17 @@ const { title = 'Église de Gatineau | Gatineau Church', description = 'Bienvenu
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+		{theme && (
+			<style is:inline set:html={`
+				:root {
+					--primary-blue: ${theme.primaryColor || '#1e3a8a'};
+					--primary-blue-light: ${theme.secondaryColor || '#3b82f6'};
+					--accent-gold: ${theme.accentColor || '#f59e0b'};
+					--neutral-50: ${theme.backgroundColor || '#f8fafc'};
+					--neutral-700: ${theme.textColor || '#334155'};
+				}
+			`} />
+		)}
 	</head>
 	<body>
 		<slot />

@@ -1,0 +1,95 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getValidLanguage } from '../../lib/routing';
+import { getSiteSettings, getPageBySlug } from '../../lib/sanity/queries';
+import { getLocalizedString } from '../../lib/sanity/utils';
+import type { LanguageCode } from '../../lib/sanity/languages';
+
+const { lang } = Astro.params;
+const validLang = getValidLanguage(lang) as LanguageCode;
+
+// Fetch site settings and home page content
+const [siteSettings, homePage] = await Promise.all([
+  getSiteSettings(),
+  getPageBySlug('home', validLang)
+]);
+
+const pageTitle = homePage 
+  ? getLocalizedString(homePage.title, validLang)
+  : getLocalizedString(siteSettings?.churchName, validLang);
+
+const pageDescription = homePage?.seo?.description 
+  ? getLocalizedString(homePage.seo.description, validLang)
+  : undefined;
+
+// Generate static paths for all languages
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'fr' } },
+    { params: { lang: 'en' } }
+  ];
+}
+---
+
+<Layout 
+  title={pageTitle} 
+  description={pageDescription}
+  lang={validLang}
+>
+  <Header lang={validLang} />
+  
+  <main>
+    {homePage ? (
+      <!-- Render page sections from Sanity -->
+      <div>
+        {homePage.sections?.map((section: any) => {
+          // We'll implement section rendering in Phase 7
+          // For now, show a placeholder
+          return (
+            <section class="section">
+              <div class="container">
+                <p>Section type: {section._type}</p>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    ) : (
+      <!-- Fallback content while Sanity is being set up -->
+      <section class="hero">
+        <div class="container">
+          <h1>{validLang === 'fr' ? 'Bienvenue' : 'Welcome'}</h1>
+          <p>
+            {validLang === 'fr' 
+              ? 'Contenu en cours de configuration dans Sanity CMS...' 
+              : 'Content being configured in Sanity CMS...'}
+          </p>
+        </div>
+      </section>
+    )}
+  </main>
+
+  <Footer lang={validLang} />
+</Layout>
+
+<style>
+  main {
+    padding-top: 80px;
+    min-height: 60vh;
+  }
+
+  .hero {
+    padding: 120px 0;
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    color: white;
+  }
+
+  .hero h1 {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 24px;
+  }
+</style>

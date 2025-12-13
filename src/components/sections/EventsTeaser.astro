@@ -1,0 +1,132 @@
+---
+import { getEvents } from '../../lib/sanity/queries';
+import { getLocalizedString, getLocalizedText, formatDate, formatTime } from '../../lib/sanity/utils';
+import type { LanguageCode } from '../../lib/sanity/languages';
+
+interface Props {
+  section: any;
+  lang: LanguageCode;
+}
+
+const { section, lang } = Astro.props;
+
+const heading = section.heading ? getLocalizedString(section.heading, lang) : null;
+const subheading = section.subheading ? getLocalizedString(section.subheading, lang) : null;
+
+// Fetch upcoming events from Sanity
+const allEvents = await getEvents();
+const upcomingEvents = allEvents.filter(e => e.eventType === 'upcoming').slice(0, 3);
+---
+
+<section class="section">
+  <div class="container">
+    {(heading || subheading) && (
+      <div class="text-center" style="margin-bottom: 64px;">
+        {heading && <h2>{heading}</h2>}
+        {subheading && <p>{subheading}</p>}
+      </div>
+    )}
+    
+    <div class="grid grid-2">
+      {upcomingEvents.map((event) => {
+        const title = getLocalizedString(event.title, lang);
+        const description = getLocalizedText(event.description, lang);
+        const location = event.location ? getLocalizedString(event.location, lang) : null;
+        const eventDate = formatDate(event.startDateTime, lang);
+        const eventTime = formatTime(event.startDateTime, lang);
+        
+        return (
+          <div class="card event-card">
+            <div class="event-date">
+              <span class="month">{eventDate.split(' ')[0].toUpperCase()}</span>
+              <span class="day">{eventDate.split(' ')[1]}</span>
+            </div>
+            <div class="event-content">
+              <h3>{title}</h3>
+              <p class="event-time">{eventTime}</p>
+              {description && <div set:html={description} />}
+              {location && (
+                <div class="event-details">
+                  <p><strong>{lang === 'fr' ? 'Lieu' : 'Location'}:</strong> {location}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+    
+    {upcomingEvents.length > 0 && (
+      <div class="text-center" style="margin-top: 48px;">
+        <a href={`/${lang}/events`} class="btn btn-primary">
+          {lang === 'fr' ? 'Voir Tous les Événements' : 'View All Events'}
+        </a>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .event-card {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .event-date {
+    background: var(--accent-gold);
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+
+  .event-date .month {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .event-date .day {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .event-content h3 {
+    color: var(--primary-blue);
+    margin-bottom: 8px;
+  }
+
+  .event-time {
+    color: var(--accent-gold);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .event-details {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--neutral-200);
+  }
+
+  .event-details p {
+    margin-bottom: 8px;
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 768px) {
+    .event-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .event-date {
+      align-self: center;
+    }
+  }
+</style>

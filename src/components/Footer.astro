@@ -1,114 +1,119 @@
 ---
-const { lang = 'fr' } = Astro.props;
+import { getSiteSettings } from '../lib/sanity/queries';
+import { getLocalizedString } from '../lib/sanity/utils';
+import type { LanguageCode } from '../lib/sanity/languages';
 
-const translations = {
-  fr: {
-    churchName: 'Église de Gatineau',
-    address: '123 Rue Principale, Gatineau, QC J8X 1A1',
-    phone: 'Téléphone',
-    email: 'Courriel',
-    quickLinks: 'Liens Rapides',
-    home: 'Accueil',
-    about: 'À Propos',
-    services: 'Services',
-    events: 'Événements',
-    contact: 'Contact',
-    donate: 'Faire un Don',
-    servicesTimes: 'Horaires des Services',
-    sunday: 'Dimanche',
-    morning: 'Service du Matin',
-    evening: 'Service du Soir',
-    wednesday: 'Mercredi',
-    prayer: 'Réunion de Prière',
-    followUs: 'Suivez-nous',
-    rights: 'Tous droits réservés.',
-    builtWith: 'Construit avec amour pour la communauté de Gatineau'
-  },
-  en: {
-    churchName: 'Gatineau Church',
-    address: '123 Main Street, Gatineau, QC J8X 1A1',
-    phone: 'Phone',
-    email: 'Email',
-    quickLinks: 'Quick Links',
-    home: 'Home',
-    about: 'About',
-    services: 'Services',
-    events: 'Events',
-    contact: 'Contact',
-    donate: 'Donate',
-    servicesTimes: 'Service Times',
-    sunday: 'Sunday',
-    morning: 'Morning Service',
-    evening: 'Evening Service',
-    wednesday: 'Wednesday',
-    prayer: 'Prayer Meeting',
-    followUs: 'Follow Us',
-    rights: 'All rights reserved.',
-    builtWith: 'Built with love for the Gatineau community'
-  }
-};
+const { lang = 'fr' } = Astro.props as { lang: LanguageCode };
 
-const t = translations[lang];
+// Fetch site settings from Sanity
+const siteSettings = await getSiteSettings();
+
+const churchName = siteSettings 
+  ? getLocalizedString(siteSettings.churchName, lang)
+  : (lang === 'fr' ? 'Église de Gatineau' : 'Gatineau Church');
+
+const footerText = siteSettings?.footerText
+  ? getLocalizedString(siteSettings.footerText, lang)
+  : (lang === 'fr' ? 'Construit avec amour pour la communauté de Gatineau' : 'Built with love for the Gatineau community');
+
+const address = siteSettings?.contactInfo?.address
+  ? getLocalizedString(siteSettings.contactInfo.address, lang)
+  : (lang === 'fr' ? '123 Rue Principale, Gatineau, QC J8X 1A1' : '123 Main Street, Gatineau, QC J8X 1A1');
+
+const phone = siteSettings?.contactInfo?.phone || '(819) 555-0123';
+const email = siteSettings?.contactInfo?.email || 'info@eglisegatineau.ca';
+
+const navLinks = siteSettings?.navLinks?.filter(link => link.enabled) || [];
+const socialLinks = siteSettings?.socialLinks || [];
+
+const quickLinksTitle = lang === 'fr' ? 'Liens Rapides' : 'Quick Links';
+const servicesTimesTitle = lang === 'fr' ? 'Horaires des Services' : 'Service Times';
+const followUsTitle = lang === 'fr' ? 'Suivez-nous' : 'Follow Us';
+const phoneLabel = lang === 'fr' ? 'Téléphone' : 'Phone';
+const emailLabel = lang === 'fr' ? 'Courriel' : 'Email';
+const rightsText = lang === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.';
 ---
 
 <footer class="footer">
   <div class="container">
     <div class="footer-content">
       <div class="footer-section">
-        <h3>{t.churchName}</h3>
-        <p>{t.address}</p>
-        <p>{t.phone}: (819) 555-0123</p>
-        <p>{t.email}: info@eglisegatineau.ca</p>
+        <h3>{churchName}</h3>
+        <p>{address}</p>
+        <p>{phoneLabel}: {phone}</p>
+        <p>{emailLabel}: {email}</p>
       </div>
 
       <div class="footer-section">
-        <h4>{t.quickLinks}</h4>
+        <h4>{quickLinksTitle}</h4>
         <ul>
-          <li><a href={lang === 'fr' ? '/' : '/en'}>{t.home}</a></li>
-          <li><a href={lang === 'fr' ? '/about' : '/en/about'}>{t.about}</a></li>
-          <li><a href={lang === 'fr' ? '/services' : '/en/services'}>{t.services}</a></li>
-          <li><a href={lang === 'fr' ? '/events' : '/en/events'}>{t.events}</a></li>
-          <li><a href={lang === 'fr' ? '/contact' : '/en/contact'}>{t.contact}</a></li>
-          <li><a href={lang === 'fr' ? '/donate' : '/en/donate'}>{t.donate}</a></li>
+          {navLinks.map((link) => {
+            const label = getLocalizedString(link.label, lang);
+            const href = `/${lang}${link.href}`;
+            return <li><a href={href}>{label}</a></li>;
+          })}
         </ul>
       </div>
 
       <div class="footer-section">
-        <h4>{t.servicesTimes}</h4>
+        <h4>{servicesTimesTitle}</h4>
         <ul>
-          <li><strong>{t.sunday}</strong></li>
-          <li>{t.morning}: 9h00 & 11h00</li>
-          <li>{t.evening}: 18h00</li>
-          <li><strong>{t.wednesday}</strong></li>
-          <li>{t.prayer}: 19h00</li>
+          <li><strong>{lang === 'fr' ? 'Dimanche' : 'Sunday'}</strong></li>
+          <li>{lang === 'fr' ? 'Service du Matin' : 'Morning Service'}: 9h00 & 11h00</li>
+          <li>{lang === 'fr' ? 'Service du Soir' : 'Evening Service'}: 18h00</li>
+          <li><strong>{lang === 'fr' ? 'Mercredi' : 'Wednesday'}</strong></li>
+          <li>{lang === 'fr' ? 'Réunion de Prière' : 'Prayer Meeting'}: 19h00</li>
         </ul>
       </div>
 
       <div class="footer-section">
-        <h4>{t.followUs}</h4>
+        <h4>{followUsTitle}</h4>
         <div class="social-links">
-          <a href="#" aria-label="Facebook">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-            </svg>
-          </a>
-          <a href="#" aria-label="Instagram">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-            </svg>
-          </a>
-          <a href="#" aria-label="YouTube">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-            </svg>
-          </a>
+          {socialLinks.length > 0 ? (
+            socialLinks.map((social) => (
+              <a href={social.url} aria-label={social.label} target="_blank" rel="noopener noreferrer">
+                {social.icon === 'facebook' && (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                )}
+                {social.icon === 'instagram' && (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-2.209-1.791-4-4-4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                )}
+                {social.icon === 'youtube' && (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                )}
+              </a>
+            ))
+          ) : (
+            <!-- Default social links as fallback -->
+            <a href="https://facebook.com" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+            <a href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-2.209-1.791-4-4-4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+            <a href="https://youtube.com" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+          )}
         </div>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2024 {t.churchName}. {t.rights}</p>
-      <p>{t.builtWith}</p>
+      <p>&copy; 2024 {churchName}. {rightsText}</p>
+      <p>{footerText}</p>
     </div>
   </div>
 </footer>

@@ -1,0 +1,121 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getValidLanguage } from '../../lib/routing';
+import { getSiteSettings, getPageBySlug } from '../../lib/sanity/queries';
+import { getLocalizedString } from '../../lib/sanity/utils';
+import type { LanguageCode } from '../../lib/sanity/languages';
+
+const { lang, slug } = Astro.params;
+const validLang = getValidLanguage(lang) as LanguageCode;
+const pageSlug = slug || 'index';
+
+// Fetch site settings and page content
+const [siteSettings, page] = await Promise.all([
+  getSiteSettings(),
+  getPageBySlug(pageSlug, validLang)
+]);
+
+const pageTitle = page 
+  ? getLocalizedString(page.title, validLang)
+  : getLocalizedString(siteSettings?.churchName, validLang);
+
+const pageDescription = page?.seo?.description 
+  ? getLocalizedString(page.seo.description, validLang)
+  : undefined;
+
+// Generate static paths for all pages and languages
+export async function getStaticPaths() {
+  const pages = ['about', 'services', 'events', 'ministries', 'contact', 'donate'];
+  const languages = ['fr', 'en'];
+  
+  const paths = [];
+  for (const lang of languages) {
+    for (const page of pages) {
+      paths.push({ params: { lang, slug: page } });
+    }
+  }
+  
+  return paths;
+}
+---
+
+<Layout 
+  title={pageTitle} 
+  description={pageDescription}
+  lang={validLang}
+>
+  <Header lang={validLang} />
+  
+  <main>
+    {page ? (
+      <!-- Render page sections from Sanity -->
+      <div>
+        {page.sections?.map((section: any) => {
+          // We'll implement section rendering in Phase 7
+          // For now, show section type
+          return (
+            <section class="section">
+              <div class="container">
+                <h2>{getLocalizedString(page.title, validLang)}</h2>
+                <p>Section type: {section._type}</p>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    ) : (
+      <!-- Fallback content while Sanity is being set up -->
+      <section class="hero-small">
+        <div class="container">
+          <h1>{pageSlug}</h1>
+          <p>
+            {validLang === 'fr' 
+              ? 'Contenu en cours de configuration dans Sanity CMS...' 
+              : 'Content being configured in Sanity CMS...'}
+          </p>
+        </div>
+      </section>
+      
+      <section class="section">
+        <div class="container">
+          <p>
+            {validLang === 'fr'
+              ? 'Cette page sera bientôt disponible. Veuillez créer le contenu dans Sanity Studio.'
+              : 'This page will be available soon. Please create the content in Sanity Studio.'}
+          </p>
+        </div>
+      </section>
+    )}
+  </main>
+
+  <Footer lang={validLang} />
+</Layout>
+
+<style>
+  main {
+    padding-top: 80px;
+    min-height: 60vh;
+  }
+
+  .hero-small {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    color: white;
+    padding: 120px 0 80px;
+    text-align: center;
+  }
+
+  .hero-small h1 {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 24px;
+  }
+
+  .hero-small p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+</style>

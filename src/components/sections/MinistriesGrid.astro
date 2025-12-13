@@ -1,0 +1,47 @@
+---
+import { getMinistries } from '../../lib/sanity/queries';
+import { getLocalizedString, getLocalizedText, buildImageUrl } from '../../lib/sanity/utils';
+import type { LanguageCode } from '../../lib/sanity/languages';
+
+interface Props {
+  section: any;
+  lang: LanguageCode;
+}
+
+const { section, lang } = Astro.props;
+
+const heading = section.heading ? getLocalizedString(section.heading, lang) : null;
+const subheading = section.subheading ? getLocalizedString(section.subheading, lang) : null;
+
+// Fetch ministries from Sanity
+const ministries = await getMinistries();
+---
+
+<section class="section">
+  <div class="container">
+    {(heading || subheading) && (
+      <div class="text-center" style="margin-bottom: 64px;">
+        {heading && <h2>{heading}</h2>}
+        {subheading && <p>{subheading}</p>}
+      </div>
+    )}
+    
+    <div class="grid grid-2">
+      {ministries.map((ministry) => {
+        const title = getLocalizedString(ministry.title, lang);
+        const description = getLocalizedText(ministry.description, lang);
+        const imageUrl = ministry.image ? buildImageUrl(ministry.image).width(400).height(300).url() : null;
+        
+        return (
+          <div class="card">
+            {imageUrl && (
+              <img src={imageUrl} alt={title} style="width: 100%; border-radius: 8px; margin-bottom: 16px;" />
+            )}
+            <h3>{title}</h3>
+            {description && <div set:html={description} />}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

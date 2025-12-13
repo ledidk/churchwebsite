@@ -1,0 +1,61 @@
+
+
+---
+import HeroSection from './sections/HeroSection.astro';
+import RichTextSection from './sections/RichTextSection.astro';
+import TextSection from './sections/TextSection.astro';
+import ServicesGrid from './sections/ServicesGrid.astro';
+import MinistriesGrid from './sections/MinistriesGrid.astro';
+import EventsTeaser from './sections/EventsTeaser.astro';
+import ContactSection from './sections/ContactSection.astro';
+// Note: DonorboxSection will be added once created
+import type { LanguageCode } from '../lib/sanity/languages';
+
+interface Props {
+  sections: any[];
+  lang: LanguageCode;
+}
+
+const { sections = [], lang } = Astro.props;
+---
+
+{sections.map((section) => {
+  switch (section._type) {
+    case 'heroSection':
+      return <HeroSection section={section} lang={lang} />;
+    case 'richTextSection':
+      return <RichTextSection section={section} lang={lang} />;
+    case 'textSection':
+      return <TextSection section={section} lang={lang} />;
+    case 'servicesGrid':
+      return <ServicesGrid section={section} lang={lang} />;
+    case 'ministriesGrid':
+      return <MinistriesGrid section={section} lang={lang} />;
+    case 'eventsTeaser':
+      return <EventsTeaser section={section} lang={lang} />;
+
+    case 'contactSection':
+      return <ContactSection section={section} lang={lang} />;
+    case 'donorboxSection':
+      // DonorboxSection component will be rendered inline since file creation had issues
+      const donorboxSection = section;
+      const heading = donorboxSection.heading || (lang === 'fr' ? 'Faire un Don' : 'Donate');
+      const blurb = donorboxSection.blurb || (lang === 'fr' ? 'Votre générosité nous aide à continuer notre mission' : 'Your generosity helps us continue our mission');
+      
+      return (
+        <section class="section">
+          <div class="container">
+            <div class="text-center" style="margin-bottom: 64px;">
+              <h2>{heading}</h2>
+              {blurb && <p>{blurb}</p>}
+            </div>
+            <div class="text-center">
+              <p>{lang === 'fr' ? 'Configuration du formulaire de don en cours...' : 'Donation form configuration coming soon...'}</p>
+            </div>
+          </div>
+        </section>
+      );
+    default:
+      return null;
+  }
+})}

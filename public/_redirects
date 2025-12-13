@@ -1,0 +1,21 @@
+# Redirect root to French
+/                    /fr                301!
+
+# Redirect old French routes to new structure
+/about               /fr/about          301
+/services            /fr/services       301
+/events              /fr/events         301
+/ministries          /fr/ministries     301
+/contact             /fr/contact        301
+/donate              /fr/donate         301
+
+# Keep English routes working
+/en                  /en                200
+/en/*                /en/:splat         200
+
+# French routes
+/fr                  /fr                200
+/fr/*                /fr/:splat         200
+
+# 404 fallback
+/*                   /404.html          404

@@ -1,0 +1,57 @@
+---
+import { getLocalizedString } from '../../lib/sanity/utils';
+import type { LanguageCode } from '../../lib/sanity/languages';
+
+interface Props {
+  section: any;
+  lang: LanguageCode;
+}
+
+const { section, lang } = Astro.props;
+
+const heading = section.heading ? getLocalizedString(section.heading, lang) : null;
+const text = section.text ? getLocalizedString(section.text, lang) : null;
+const alignment = section.alignment || 'left';
+---
+
+{(heading || text) && (
+  <section class="section">
+    <div class="container">
+      <div class={`text-content text-${alignment}`}>
+        {heading && <h2>{heading}</h2>}
+        {text && <p>{text}</p>}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .text-content {
+    max-width: 800px;
+  }
+
+  .text-left {
+    margin-right: auto;
+  }
+
+  .text-center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .text-right {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .text-content h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .text-content p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--neutral-700);
+  }
+</style>
