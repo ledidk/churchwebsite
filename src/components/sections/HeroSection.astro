@@ -11,12 +11,12 @@ const { section, lang } = Astro.props;
 
 const headline = getLocalizedString(section.headline, lang);
 const subtext = section.subtext ? getLocalizedString(section.subtext, lang) : null;
-const backgroundImage = section.backgroundImage 
+const backgroundImage = section.backgroundImage
   ? buildImageUrl(section.backgroundImage).width(1920).height(1080).url()
   : 'https://images.pexels.com/photos/2291599/pexels-photo-2291599.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop';
 
-const primaryCTA = section.primaryCTA;
-const secondaryCTA = section.secondaryCTA;
+const ctaLabel = section.ctaLabel ? getLocalizedString(section.ctaLabel, lang) : null;
+const ctaUrl = section.ctaUrl;
 ---
 
 <section class="hero">
@@ -32,14 +32,9 @@ const secondaryCTA = section.secondaryCTA;
         {subtext && <p class="hero-subtitle">{subtext}</p>}
         
         <div class="hero-actions">
-          {primaryCTA && (
-            <a href={primaryCTA.url} class="btn btn-primary">
-              {getLocalizedString(primaryCTA.label, lang)}
-            </a>
-          )}
-          {secondaryCTA && (
-            <a href={secondaryCTA.url} class="btn btn-outline">
-              {getLocalizedString(secondaryCTA.label, lang)}
+          {ctaLabel && ctaUrl && (
+            <a href={ctaUrl} class="btn btn-primary">
+              {ctaLabel}
             </a>
           )}
         </div>

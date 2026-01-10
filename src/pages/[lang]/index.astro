@@ -2,6 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import HeroSection from '../../components/sections/HeroSection.astro';
+import RichTextSection from '../../components/sections/RichTextSection.astro';
+import TextSection from '../../components/sections/TextSection.astro';
+import ServicesGrid from '../../components/sections/ServicesGrid.astro';
+import MinistriesGrid from '../../components/sections/MinistriesGrid.astro';
+import EventsTeaser from '../../components/sections/EventsTeaser.astro';
+import ContactSection from '../../components/sections/ContactSection.astro';
 import { getValidLanguage } from '../../lib/routing';
 import { getSiteSettings, getPageBySlug } from '../../lib/sanity/queries';
 import { getLocalizedString } from '../../lib/sanity/utils';
@@ -45,15 +52,30 @@ export async function getStaticPaths() {
       <!-- Render page sections from Sanity -->
       <div>
         {homePage.sections?.map((section: any) => {
-          // We'll implement section rendering in Phase 7
-          // For now, show a placeholder
-          return (
-            <section class="section">
-              <div class="container">
-                <p>Section type: {section._type}</p>
-              </div>
-            </section>
-          );
+          if (section._type === 'heroSection') {
+            return <HeroSection section={section} lang={validLang} />;
+          } else if (section._type === 'richTextSection') {
+            return <RichTextSection section={section} lang={validLang} />;
+          } else if (section._type === 'textSection') {
+            return <TextSection section={section} lang={validLang} />;
+          } else if (section._type === 'servicesGrid') {
+            return <ServicesGrid section={section} lang={validLang} />;
+          } else if (section._type === 'ministriesGrid') {
+            return <MinistriesGrid section={section} lang={validLang} />;
+          } else if (section._type === 'eventsTeaser') {
+            return <EventsTeaser section={section} lang={validLang} />;
+          } else if (section._type === 'contactSection') {
+            return <ContactSection section={section} lang={validLang} />;
+          } else {
+            // Fallback for unknown section types
+            return (
+              <section class="section">
+                <div class="container">
+                  <p>Unknown section type: {section._type}</p>
+                </div>
+              </section>
+            );
+          }
         })}
       </div>
     ) : (
@@ -62,8 +84,8 @@ export async function getStaticPaths() {
         <div class="container">
           <h1>{validLang === 'fr' ? 'Bienvenue' : 'Welcome'}</h1>
           <p>
-            {validLang === 'fr' 
-              ? 'Contenu en cours de configuration dans Sanity CMS...' 
+            {validLang === 'fr'
+              ? 'Contenu en cours de configuration dans Sanity CMS...'
               : 'Content being configured in Sanity CMS...'}
           </p>
         </div>

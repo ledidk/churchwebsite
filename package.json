@@ -12,9 +12,10 @@
     "sanity:deploy": "cd sanity && sanity deploy"
   },
   "dependencies": {
-    "astro": "^5.2.5",
     "@sanity/client": "^6.11.0",
-    "groq": "^3.30.0"
+    "astro": "^5.2.5",
+    "groq": "^3.30.0",
+    "styled-components": "^6.3.3"
   },
   "devDependencies": {
     "@sanity/vision": "^3.30.0",
