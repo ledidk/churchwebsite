@@ -24,8 +24,8 @@ const {
 
 // Default content
 const defaultHeadline = lang === 'fr' 
-  ? 'Bienvenue à l\'Église de Gatineau'
-  : 'Welcome to Gatineau Church';
+  ? 'Bienvenue à l\'Église Le Centre Chrétien des Vainqueurs'
+  : 'Welcome to Winners Christian Center Church';
 
 const defaultSubtext = lang === 'fr'
   ? 'Une communauté de foi, d\'espoir et d\'amour au cœur de Gatineau'
@@ -40,7 +40,7 @@ const subtextText = subtext?.[lang] || subtext?.fr || defaultSubtext;
 const descriptionText = description?.[lang] || description?.fr || defaultDescription;
 
 const bgImageUrl = backgroundImage 
-  ? buildImageUrl(backgroundImage).width(1920).height(1080).url()
+  ? buildImageUrl(backgroundImage).width(1920).height(1080).url( )
   : 'https://images.pexels.com/photos/2291599/pexels-photo-2291599.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop';
 
 const primaryLabel = primaryCTA?.label?.[lang] || primaryCTA?.label?.fr || (lang === 'fr' ? 'Nous Rejoindre' : 'Join Us');

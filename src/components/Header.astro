@@ -11,12 +11,15 @@ const siteSettings = await getSiteSettings();
 
 const churchName = siteSettings 
   ? getLocalizedString(siteSettings.churchName, lang)
-  : (lang === 'fr' ? 'Église de Gatineau' : 'Gatineau Church');
+  : (lang === 'fr' ? 'Le Centre Chrétien des Vainqueurs' : 'Winners Christian Center');
 
 const navLinks = siteSettings?.navLinks?.filter(link => link.enabled) || [];
 
-// Get logo URL if available
+// Local public path to a fallback logo you can add: /public/images/logo.png
+const localLogoPath = '/images/vainqueursLogo.jpeg';
+// Get logo URL from Sanity if available, otherwise use local fallback path
 const logoUrl = siteSettings?.logo ? buildImageUrl(siteSettings.logo).width(200).url() : null;
+const logoSrc = logoUrl || localLogoPath;
 
 // Get alternate language for switcher
 const alternateLang = getAlternateLanguage(lang);
@@ -29,8 +32,8 @@ const alternatePath = switchLanguage(currentPath, alternateLang);
     <nav class="nav">
       <div class="nav-brand">
         <a href={`/${lang}`}>
-          {logoUrl ? (
-            <img src={logoUrl} alt={churchName} class="logo" />
+          {logoSrc ? (
+            <img src={logoSrc} alt={churchName} class="logo" />
           ) : (
             <h2>{churchName}</h2>
           )}

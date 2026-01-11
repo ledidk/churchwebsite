@@ -2,6 +2,7 @@
 import { getSiteSettings } from '../lib/sanity/queries';
 import { getLocalizedString } from '../lib/sanity/utils';
 import type { LanguageCode } from '../lib/sanity/languages';
+import type { NavLink, SocialLink } from '../lib/sanity/types';
 
 const { lang = 'fr' } = Astro.props as { lang: LanguageCode };
 
@@ -10,7 +11,7 @@ const siteSettings = await getSiteSettings();
 
 const churchName = siteSettings 
   ? getLocalizedString(siteSettings.churchName, lang)
-  : (lang === 'fr' ? 'Église de Gatineau' : 'Gatineau Church');
+  : (lang === 'fr' ? 'Le Centre Chrétien des Vainqueurs' : 'Winners Christian Center');
 
 const footerText = siteSettings?.footerText
   ? getLocalizedString(siteSettings.footerText, lang)
@@ -18,13 +19,13 @@ const footerText = siteSettings?.footerText
 
 const address = siteSettings?.contactInfo?.address
   ? getLocalizedString(siteSettings.contactInfo.address, lang)
-  : (lang === 'fr' ? '123 Rue Principale, Gatineau, QC J8X 1A1' : '123 Main Street, Gatineau, QC J8X 1A1');
+  : (lang === 'fr' ? '4 Rue Georges Bilodeau, Gatineau QC J8Z 1V2' : '123 Main Street, Gatineau, QC J8X 1A14 Rue Georges Bilodeau, Gatineau QC J8Z 1V2');
 
 const phone = siteSettings?.contactInfo?.phone || '(819) 555-0123';
-const email = siteSettings?.contactInfo?.email || 'info@eglisegatineau.ca';
+const email = siteSettings?.contactInfo?.email || 'info@centrechretiendesvainqueurs.ca';
 
-const navLinks = siteSettings?.navLinks?.filter(link => link.enabled) || [];
-const socialLinks = siteSettings?.socialLinks || [];
+const navLinks: NavLink[] = siteSettings?.navLinks?.filter((link: NavLink) => link.enabled) || [];
+const socialLinks: SocialLink[] = siteSettings?.socialLinks || [];
 
 const quickLinksTitle = lang === 'fr' ? 'Liens Rapides' : 'Quick Links';
 const servicesTimesTitle = lang === 'fr' ? 'Horaires des Services' : 'Service Times';
@@ -47,7 +48,7 @@ const rightsText = lang === 'fr' ? 'Tous droits réservés.' : 'All rights reser
       <div class="footer-section">
         <h4>{quickLinksTitle}</h4>
         <ul>
-          {navLinks.map((link) => {
+          {navLinks.map((link: NavLink) => {
             const label = getLocalizedString(link.label, lang);
             const href = `/${lang}${link.href}`;
             return <li><a href={href}>{label}</a></li>;
@@ -70,7 +71,7 @@ const rightsText = lang === 'fr' ? 'Tous droits réservés.' : 'All rights reser
         <h4>{followUsTitle}</h4>
         <div class="social-links">
           {socialLinks.length > 0 ? (
-            socialLinks.map((social) => (
+            socialLinks.map((social: SocialLink) => (
               <a href={social.url} aria-label={social.label} target="_blank" rel="noopener noreferrer">
                 {social.icon === 'facebook' && (
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
